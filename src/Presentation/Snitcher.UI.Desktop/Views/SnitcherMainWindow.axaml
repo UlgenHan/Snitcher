@@ -152,21 +152,7 @@
                                     <TextBlock Grid.Column="1" Text="Home" FontSize="14" Foreground="White" VerticalAlignment="Center" Margin="12,0,0,0"/>
                                 </Grid>
                             </Border>
-
-                            <Border Background="Transparent" CornerRadius="4" Padding="16,8" Cursor="Hand">
-                                <Grid ColumnDefinitions="Auto,*">
-                                    <ic:FluentIcon Grid.Column="0" Icon="Search" Width="16" Height="16" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="1" Text="Search" FontSize="14" Foreground="#B3B3B3" VerticalAlignment="Center" Margin="12,0,0,0"/>
-                                </Grid>
-                            </Border>
-
-                            <Border Background="Transparent" CornerRadius="4" Padding="16,8" Cursor="Hand">
-                                <Grid ColumnDefinitions="Auto,*">
-                                    <ic:FluentIcon Grid.Column="0" Icon="Library" Width="16" Height="16" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="1" Text="Your Library" FontSize="14" Foreground="#B3B3B3" VerticalAlignment="Center" Margin="12,0,0,0"/>
-                                </Grid>
-                            </Border>
-
+							
                             <Border Height="1" Background="#282828" Margin="8,16,8,16"/>
 
                             <TextBlock Text="WORKSPACES" FontSize="12" FontWeight="Bold" Foreground="#B3B3B3" Margin="16,0,0,8"/>
@@ -484,7 +470,7 @@
                                 <ItemsControl ItemsSource="{Binding Workspaces}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal" ItemWidth="284" MaxWidth="1704" />
+                                            <WrapPanel Orientation="Horizontal" ItemWidth="290" MaxWidth="1704" />
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
@@ -494,7 +480,7 @@
                                                    BorderThickness="1"
                                                    CornerRadius="12"
                                                    Padding="20"
-                                                   Width="260"
+                                                   Width="280"
                                                    Height="240"
                                                    Margin="12"
                                                    HorizontalAlignment="Stretch"

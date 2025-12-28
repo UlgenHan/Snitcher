@@ -2,9 +2,10 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Microsoft.Extensions.DependencyInjection;
+using mdDI = Microsoft.Extensions.DependencyInjection;
 using Snitcher.UI.Desktop.ViewModels;
 using Snitcher.UI.Desktop.Models.WorkSpaces;
+using Snitcher.UI.Desktop.Services.Database;
 
 namespace Snitcher.UI.Desktop.Dialogs;
 
@@ -20,9 +21,9 @@ public partial class CreateWorkspaceDialog : Window
         var serviceProvider = App.ServiceProvider;
         if (serviceProvider != null)
         {
-            var databaseService = serviceProvider.GetRequiredService<Services.Database.DatabaseIntegrationService>();
-            var logger = serviceProvider.GetRequiredService<Microsoft.Extensions.Logging.ILogger<CreateWorkspaceViewModel>>();
-            var viewModel = new CreateWorkspaceViewModel(databaseService, logger);
+            var databaseService = mdDI.ServiceProviderServiceExtensions.GetRequiredService<IDatabaseIntegrationService>(serviceProvider);
+            var logger = mdDI.ServiceProviderServiceExtensions.GetRequiredService<Microsoft.Extensions.Logging.ILogger<CreateWorkspaceViewModel>>(serviceProvider);
+            var viewModel = new CreateWorkspaceViewModel(databaseService as DatabaseIntegrationService, logger);
             DataContext = viewModel;
             
             // Subscribe to workspace created event

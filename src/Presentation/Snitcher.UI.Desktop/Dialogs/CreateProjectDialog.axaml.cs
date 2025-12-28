@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using Snitcher.UI.Desktop.ViewModels;
 using Snitcher.UI.Desktop.Models.WorkSpaces;
+using Snitcher.UI.Desktop.Services.Database;
 
 namespace Snitcher.UI.Desktop.Dialogs;
 
@@ -20,9 +21,9 @@ public partial class CreateProjectDialog : Window
         var serviceProvider = App.ServiceProvider;
         if (serviceProvider != null)
         {
-            var databaseService = serviceProvider.GetRequiredService<Services.Database.DatabaseIntegrationService>();
+            var databaseService = serviceProvider.GetRequiredService<Services.Database.IDatabaseIntegrationService>();
             var logger = serviceProvider.GetRequiredService<Microsoft.Extensions.Logging.ILogger<CreateProjectViewModel>>();
-            var viewModel = new CreateProjectViewModel(databaseService, logger);
+            var viewModel = new CreateProjectViewModel(databaseService as DatabaseIntegrationService, logger);
             DataContext = viewModel;
             
             // Subscribe to project created event

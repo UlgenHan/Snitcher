@@ -5,7 +5,7 @@
         x:Class="Snitcher.UI.Desktop.Dialogs.CreateProjectDialog"
         x:DataType="vm:CreateProjectViewModel"
         Title="Create New Project"
-        Width="500" Height="450"
+        Width="500" Height="520"
         CanResize="False"
         WindowStartupLocation="CenterOwner">
 
