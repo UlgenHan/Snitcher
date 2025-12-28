@@ -1,0 +1,94 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<!-- Spotify Core Colors -->
+	<Color x:Key="SpotifyBlack">#000000</Color>
+	<Color x:Key="SpotifyDarkGray">#121212</Color>
+	<Color x:Key="SpotifyGray">#181818</Color>
+	<Color x:Key="SpotifyLightGray">#282828</Color>
+	<Color x:Key="SpotifyLighterGray">#3E3E3E</Color>
+	<Color x:Key="SpotifyWhite">#FFFFFF</Color>
+	<Color x:Key="SpotifyGrayText">#B3B3B3</Color>
+	<Color x:Key="SpotifySubdued">#6A6A6A</Color>
+
+	<!-- Spotify Green (Primary) -->
+	<Color x:Key="SpotifyGreen">#1DB954</Color>
+	<Color x:Key="SpotifyGreenHover">#1ED760</Color>
+	<Color x:Key="SpotifyGreenActive">#1AA34A</Color>
+
+	<!-- Background Hierarchy -->
+	<Color x:Key="BackgroundBase">#000000</Color>
+	<Color x:Key="BackgroundElevated">#121212</Color>
+	<Color x:Key="BackgroundHighlight">#181818</Color>
+	<Color x:Key="BackgroundPress">#282828</Color>
+	<Color x:Key="BackgroundHover">#282828</Color>
+
+	<!-- Text Colors -->
+	<Color x:Key="TextBase">#FFFFFF</Color>
+	<Color x:Key="TextSubdued">#B3B3B3</Color>
+	<Color x:Key="TextBrightest">#FFFFFF</Color>
+	<Color x:Key="TextBright">#EFEFEF</Color>
+	<Color x:Key="TextMuted">#7C7C7C</Color>
+	<Color x:Key="TextDisabled">#6A6A6A</Color>
+
+	<!-- Status Colors -->
+	<Color x:Key="Success">#1DB954</Color>
+	<Color x:Key="Warning">#E9A14D</Color>
+	<Color x:Key="Error">#E22850</Color>
+	<Color x:Key="Info">#4C9AFF</Color>
+
+	<!-- HTTP Method Colors -->
+	<Color x:Key="GetColor">#1DB954</Color>
+	<Color x:Key="PostColor">#4C9AFF</Color>
+	<Color x:Key="PutColor">#E9A14D</Color>
+	<Color x:Key="DeleteColor">#E22850</Color>
+	<Color x:Key="PatchColor">#9333EA</Color>
+	<Color x:Key="HeadColor">#7C7C7C</Color>
+	<Color x:Key="OptionsColor">#14B8A6</Color>
+
+	<!-- Border Color -->
+	<Color x:Key="Border">#282828</Color>
+
+	<!-- Convert to Brushes -->
+	<SolidColorBrush x:Key="SpotifyBlackBrush" Color="{StaticResource SpotifyBlack}"/>
+	<SolidColorBrush x:Key="SpotifyDarkGrayBrush" Color="{StaticResource SpotifyDarkGray}"/>
+	<SolidColorBrush x:Key="SpotifyGrayBrush" Color="{StaticResource SpotifyGray}"/>
+	<SolidColorBrush x:Key="SpotifyLightGrayBrush" Color="{StaticResource SpotifyLightGray}"/>
+	<SolidColorBrush x:Key="SpotifyLighterGrayBrush" Color="{StaticResource SpotifyLighterGray}"/>
+	<SolidColorBrush x:Key="SpotifyWhiteBrush" Color="{StaticResource SpotifyWhite}"/>
+	<SolidColorBrush x:Key="SpotifyGrayTextBrush" Color="{StaticResource SpotifyGrayText}"/>
+	<SolidColorBrush x:Key="SpotifySubduedBrush" Color="{StaticResource SpotifySubdued}"/>
+
+	<SolidColorBrush x:Key="SpotifyGreenBrush" Color="{StaticResource SpotifyGreen}"/>
+	<SolidColorBrush x:Key="SpotifyGreenHoverBrush" Color="{StaticResource SpotifyGreenHover}"/>
+	<SolidColorBrush x:Key="SpotifyGreenActiveBrush" Color="{StaticResource SpotifyGreenActive}"/>
+
+	<SolidColorBrush x:Key="BackgroundBaseBrush" Color="{StaticResource BackgroundBase}"/>
+	<SolidColorBrush x:Key="BackgroundElevatedBrush" Color="{StaticResource BackgroundElevated}"/>
+	<SolidColorBrush x:Key="BackgroundHighlightBrush" Color="{StaticResource BackgroundHighlight}"/>
+	<SolidColorBrush x:Key="BackgroundPressBrush" Color="{StaticResource BackgroundPress}"/>
+	<SolidColorBrush x:Key="BackgroundHoverBrush" Color="{StaticResource BackgroundHover}"/>
+
+	<SolidColorBrush x:Key="TextBaseBrush" Color="{StaticResource TextBase}"/>
+	<SolidColorBrush x:Key="TextSubduedBrush" Color="{StaticResource TextSubdued}"/>
+	<SolidColorBrush x:Key="TextBrightestBrush" Color="{StaticResource TextBrightest}"/>
+	<SolidColorBrush x:Key="TextBrightBrush" Color="{StaticResource TextBright}"/>
+	<SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}"/>
+	<SolidColorBrush x:Key="TextDisabledBrush" Color="{StaticResource TextDisabled}"/>
+
+	<SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}"/>
+	<SolidColorBrush x:Key="WarningBrush" Color="{StaticResource Warning}"/>
+	<SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}"/>
+	<SolidColorBrush x:Key="InfoBrush" Color="{StaticResource Info}"/>
+
+	<SolidColorBrush x:Key="GetBrush" Color="{StaticResource GetColor}"/>
+	<SolidColorBrush x:Key="PostBrush" Color="{StaticResource PostColor}"/>
+	<SolidColorBrush x:Key="PutBrush" Color="{StaticResource PutColor}"/>
+	<SolidColorBrush x:Key="DeleteBrush" Color="{StaticResource DeleteColor}"/>
+	<SolidColorBrush x:Key="PatchBrush" Color="{StaticResource PatchColor}"/>
+	<SolidColorBrush x:Key="HeadBrush" Color="{StaticResource HeadColor}"/>
+	<SolidColorBrush x:Key="OptionsBrush" Color="{StaticResource OptionsColor}"/>
+
+	<!-- Add the missing BorderBrush -->
+	<SolidColorBrush x:Key="BorderBrush" Color="{StaticResource Border}"/>
+</ResourceDictionary>

@@ -1,0 +1,403 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Snitcher.UI.Desktop.ViewModels"
+        xmlns:views="using:Snitcher.UI.Desktop.Views"
+        xmlns:proxyVm="using:Snitcher.UI.Desktop.Domains.Proxy"
+        xmlns:proxyViews="using:Snitcher.UI.Desktop.Domains.Proxy"
+        xmlns:requestBuilderVm="using:Snitcher.UI.Desktop.Domains.RequestBuilder"
+        xmlns:requestBuilderViews="using:Snitcher.UI.Desktop.Domains.RequestBuilder"
+        xmlns:automationVm="using:Snitcher.UI.Desktop.Domains.Automation"
+        xmlns:automationViews="using:Snitcher.UI.Desktop.Domains.Automation"
+        xmlns:collectionsVm="using:Snitcher.UI.Desktop.Domains.Collections"
+        xmlns:collectionsViews="using:Snitcher.UI.Desktop.Domains.Collections"
+        xmlns:workspaceVm="using:Snitcher.UI.Desktop.Domains.Workspace"
+        xmlns:workspaceViews="using:Snitcher.UI.Desktop.Domains.Workspace"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="1000"
+        x:Class="Snitcher.UI.Desktop.Views.MainApplicationWindow"
+        x:DataType="vm:MainApplicationWindowViewModel"
+        WindowState="Normal"
+        Width="1600"
+        Height="1000"
+        MinWidth="1200"
+        MinHeight="800"
+        Title="Snitcher"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="56"
+        CanResize="True"
+        Background="#000000">
+
+    <Window.Styles>
+        <!-- Sidebar Buttons -->
+        <Style Selector="Button.sidebarButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#B3B3B3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="240"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="400"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="24,0"/>
+        </Style>
+        
+        <Style Selector="Button.sidebarButton:pointerover">
+            <Setter Property="Background" Value="#282828"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <!-- Window Controls -->
+        <Style Selector="Button.windowControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#B3B3B3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="48"/>
+            <Setter Property="Height" Value="56"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        
+        <Style Selector="Button.windowControl:pointerover">
+            <Setter Property="Background" Value="#282828"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+        
+        <Style Selector="Button.windowControl:close:pointerover">
+            <Setter Property="Background" Value="#E81123"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <!-- Action Buttons -->
+        <Style Selector="Button.actionButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#B3B3B3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#404040"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="400"/>
+        </Style>
+        
+        <Style Selector="Button.actionButton:pointerover">
+            <Setter Property="Background" Value="#282828"/>
+            <Setter Property="BorderBrush" Value="#404040"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <!-- Primary Button -->
+        <Style Selector="Button.primaryButton">
+            <Setter Property="Background" Value="#1DB954"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="700"/>
+        </Style>
+        
+        <Style Selector="Button.primaryButton:pointerover">
+            <Setter Property="Background" Value="#1ED760"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="56"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Bar -->
+        <Border Grid.Row="0" Background="#000000" IsHitTestVisible="False">
+            <Grid IsHitTestVisible="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- App Brand -->
+                <StackPanel Grid.Column="0" 
+                           Orientation="Horizontal"
+                           VerticalAlignment="Center"
+                           Margin="16,0,0,0"
+                           IsHitTestVisible="True">
+                    <!-- Logo -->
+                    <Border Background="#1DB954"
+                           CornerRadius="4"
+                           Width="32" Height="32"
+                           Margin="0,0,12,0">
+                        <TextBlock Text="S"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                    
+                    <!-- Title -->
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Snitcher"
+                                   FontSize="14"
+                                   FontWeight="600"
+                                   Foreground="#FFFFFF"/>
+                        <TextBlock Text="API Development Platform"
+                                   FontSize="11"
+                                   Foreground="#B3B3B3"
+                                   Margin="0,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Draggable Area -->
+                <Border Grid.Column="1"
+                        Background="Transparent"
+                        IsHitTestVisible="True"/>
+
+                <!-- Window Controls -->
+                <StackPanel Grid.Column="2"
+                           Orientation="Horizontal"
+                           VerticalAlignment="Center"
+                           IsHitTestVisible="True">
+                    <Button Classes="windowControl"
+                            Command="{Binding WindowMinimizeCommand}"
+                            ToolTip.Tip="Minimize"
+                            Content="−"/>
+                    <Button Classes="windowControl"
+                            Command="{Binding WindowMaximizeCommand}"
+                            ToolTip.Tip="Maximize"
+                            Content="□"/>
+                    <Button Classes="windowControl close"
+                            Command="{Binding WindowCloseCommand}"
+                            ToolTip.Tip="Close"
+                            Content="×"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Separator -->
+        <Border Grid.Row="1" Background="#282828" Height="1"/>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar -->
+            <Border Grid.Column="0" Background="#000000">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Navigation -->
+                    <ScrollViewer Grid.Row="0" 
+                                 HorizontalScrollBarVisibility="Disabled"
+                                 VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,24,0,0">
+                            <!-- Main Section -->
+                            <StackPanel Margin="24,0,24,24">
+                                <TextBlock Text="MAIN"
+                                           FontSize="12"
+                                           FontWeight="700"
+                                           Foreground="#B3B3B3"
+                                           Margin="0,0,0,8"/>
+                                
+                                <Button Classes="sidebarButton"
+                                       Command="{Binding NavigateToWelcomeCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="16">
+                                        <TextBlock Text="🏠" FontSize="20"/>
+                                        <TextBlock Text="Welcome"/>
+                                    </StackPanel>
+                                </Button>
+                                
+                                <Button Classes="sidebarButton"
+                                       Command="{Binding NavigateToRequestBuilderCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="16">
+                                        <TextBlock Text="🔧" FontSize="20"/>
+                                        <TextBlock Text="Request Builder"/>
+                                    </StackPanel>
+                                </Button>
+                                
+                                <Button Classes="sidebarButton"
+                                       Command="{Binding NavigateToCollectionsCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="16">
+                                        <TextBlock Text="📁" FontSize="20"/>
+                                        <TextBlock Text="Collections"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+
+                            <!-- Tools Section -->
+                            <StackPanel Margin="24,0,24,24">
+                                <TextBlock Text="TOOLS"
+                                           FontSize="12"
+                                           FontWeight="700"
+                                           Foreground="#B3B3B3"
+                                           Margin="0,0,0,8"/>
+                                
+                                <Button Classes="sidebarButton"
+                                       Command="{Binding NavigateToProxyInspectorCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="16">
+                                        <TextBlock Text="🔍" FontSize="20"/>
+                                        <TextBlock Text="Proxy Inspector"/>
+                                    </StackPanel>
+                                </Button>
+                                
+                                <Button Classes="sidebarButton"
+                                       Command="{Binding NavigateToAutomationCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="16">
+                                        <TextBlock Text="▶️" FontSize="20"/>
+                                        <TextBlock Text="Automation"/>
+                                    </StackPanel>
+                                </Button>
+                                
+                                <Button Classes="sidebarButton"
+                                       Command="{Binding NavigateToExtensionsCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="16">
+                                        <TextBlock Text="🧩" FontSize="20"/>
+                                        <TextBlock Text="Extensions"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+
+                            <!-- Settings Section -->
+                            <StackPanel Margin="24,0,24,24">
+                                <TextBlock Text="SETTINGS"
+                                           FontSize="12"
+                                           FontWeight="700"
+                                           Foreground="#B3B3B3"
+                                           Margin="0,0,0,8"/>
+                                
+                                <Button Classes="sidebarButton"
+                                       Command="{Binding NavigateToWorkspaceManagerCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="16">
+                                        <TextBlock Text="⚙️" FontSize="20"/>
+                                        <TextBlock Text="Workspace Manager"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- User Profile -->
+                    <Border Grid.Row="1"
+                           Background="#181818"
+                           Height="80"
+                           Padding="24">
+                        <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Center">
+                            <Border Grid.Column="0"
+                                   Background="#282828"
+                                   CornerRadius="16"
+                                   Width="32" Height="32"
+                                   Margin="0,0,16,0">
+                                <TextBlock Text="👤"
+                                           FontSize="16"
+                                           Foreground="#B3B3B3"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="Developer"
+                                           FontSize="14"
+                                           FontWeight="700"
+                                           Foreground="#FFFFFF"/>
+                                <TextBlock Text="Pro Account"
+                                           FontSize="11"
+                                           Foreground="#1DB954"
+                                           Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Separator -->
+            <Border Grid.Column="1" Background="#282828" Width="1"/>
+
+            <!-- Content Area -->
+            <Border Grid.Column="2" Background="#121212">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <Border Grid.Row="0"
+                           Background="#181818"
+                           BorderThickness="0,0,0,1"
+                           BorderBrush="#282828"
+                           Padding="32,20,32,20">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding CurrentViewTitle}"
+                                           FontSize="32"
+                                           FontWeight="700"
+                                           Foreground="#FFFFFF"/>
+                                <TextBlock Text="{Binding CurrentViewDescription}"
+                                           FontSize="14"
+                                           Foreground="#B3B3B3"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                            
+                            <!-- Actions -->
+                            <StackPanel Grid.Column="1" 
+                                       Orientation="Horizontal"
+                                       Spacing="8"
+                                       VerticalAlignment="Center">
+                                <Button Classes="actionButton">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="🔍" FontSize="16"/>
+                                        <TextBlock Text="Search"/>
+                                    </StackPanel>
+                                </Button>
+                                
+                                <Button Classes="primaryButton">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="➕" FontSize="16"/>
+                                        <TextBlock Text="New"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Dynamic Content -->
+                    <ContentControl Grid.Row="1"
+                                   Content="{Binding CurrentViewModel}">
+                        <ContentControl.DataTemplates>
+                            <DataTemplate DataType="vm:WelcomeViewModel">
+                                <views:WelcomeView/>
+                            </DataTemplate>
+                            <DataTemplate DataType="requestBuilderVm:RequestBuilderViewModel">
+                                <requestBuilderViews:RequestBuilderView/>
+                            </DataTemplate>
+                            <DataTemplate DataType="collectionsVm:CollectionsExplorerViewModel">
+                                <collectionsViews:CollectionsExplorerView/>
+                            </DataTemplate>
+                            <DataTemplate DataType="proxyVm:ProxyInspectorViewModel">
+                                <proxyViews:ProxyInspectorView/>
+                            </DataTemplate>
+                            <DataTemplate DataType="automationVm:AutomationWorkflowViewModel">
+                                <automationViews:AutomationWorkflowView/>
+                            </DataTemplate>
+                            <DataTemplate DataType="vm:ExtensionsViewModel">
+                                <views:ExtensionsView/>
+                            </DataTemplate>
+                            <DataTemplate DataType="workspaceVm:WorkspaceManagerViewModel">
+                                <workspaceViews:WorkspaceManagerView/>
+                            </DataTemplate>
+                        </ContentControl.DataTemplates>
+                    </ContentControl>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

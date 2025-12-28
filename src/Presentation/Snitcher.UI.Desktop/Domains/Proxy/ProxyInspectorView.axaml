@@ -1,0 +1,650 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Snitcher.UI.Desktop.Domains.Proxy"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+             x:Class="Snitcher.UI.Desktop.Domains.Proxy.ProxyInspectorView"
+             x:DataType="vm:ProxyInspectorViewModel">
+
+    <UserControl.Styles>
+        <!-- Filter Buttons -->
+        <Style Selector="Button.filterButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#B3B3B3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Padding" Value="6,2"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        
+        <Style Selector="Button.filterButton:pointerover">
+            <Setter Property="Background" Value="#282828"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+        
+        <Style Selector="Button.filterButton.active">
+            <Setter Property="Background" Value="#1DB954"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <!-- Action Buttons -->
+        <Style Selector="Button.actionButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#B3B3B3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#404040"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="400"/>
+        </Style>
+        
+        <Style Selector="Button.actionButton:pointerover">
+            <Setter Property="Background" Value="#282828"/>
+            <Setter Property="BorderBrush" Value="#404040"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <!-- Primary Button -->
+        <Style Selector="Button.primaryButton">
+            <Setter Property="Background" Value="#1DB954"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="700"/>
+        </Style>
+        
+        <Style Selector="Button.primaryButton:pointerover">
+            <Setter Property="Background" Value="#1ED760"/>
+        </Style>
+
+        <!-- Ghost Button -->
+        <Style Selector="Button.ghostButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#B3B3B3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        
+        <Style Selector="Button.ghostButton:pointerover">
+            <Setter Property="Background" Value="#282828"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <!-- Danger Button -->
+        <Style Selector="Button.dangerButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E81123"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        
+        <Style Selector="Button.dangerButton:pointerover">
+            <Setter Property="Background" Value="#E81123"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <!-- Expander -->
+        <Style Selector="Expander">
+            <Setter Property="Background" Value="#181818"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12,8"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header Toolbar -->
+        <Border Grid.Row="0"
+                Background="#181818"
+                BorderBrush="#282828"
+                BorderThickness="0,0,0,1"
+                Padding="16,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Title and Status -->
+                <StackPanel Grid.Column="0" 
+                           Orientation="Horizontal"
+                           Spacing="16">
+                    <TextBlock Text="🔍 Proxy Inspector" 
+                             FontSize="16"
+                             FontWeight="600"
+                             Foreground="#FFFFFF"
+                             VerticalAlignment="Center"/>
+                    
+                    <StackPanel Orientation="Horizontal" 
+                               Spacing="8"
+                               VerticalAlignment="Center">
+                        <!-- Status Indicator -->
+                        <Border Width="16" Height="16" 
+                                CornerRadius="8"
+                                Background="{Binding ProxyStatusColor}">
+                            <Border.IsVisible>
+                                <MultiBinding>
+                                    <Binding Path="IsProxyStarting"/>
+                                    <Binding Path="IsProxyStopping"/>
+                                </MultiBinding>
+                            </Border.IsVisible>
+                            <TextBlock Text="⚡" 
+                                     Foreground="White"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     FontSize="10"/>
+                        </Border>
+                        
+                        <!-- Static Status Dot -->
+                        <Ellipse Width="8" Height="8" 
+                                Fill="{Binding ProxyStatusColor}"/>
+                        
+                        <TextBlock Text="{Binding ProxyStatus}" 
+                                 Foreground="#B3B3B3"/>
+                        <TextBlock Text=":" 
+                                 Foreground="#7C7C7C"/>
+                        <TextBlock Text="{Binding ProxyPort, StringFormat='Port {0}'}" 
+                                 Foreground="#7C7C7C"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" 
+                               Spacing="16"
+                               VerticalAlignment="Center">
+                        <TextBlock Text="{Binding TotalRequests, StringFormat='Requests: {0}'}" 
+                                 Foreground="#7C7C7C"/>
+                        <TextBlock Text="{Binding TotalResponses, StringFormat='Responses: {0}'}" 
+                                 Foreground="#7C7C7C"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Controls -->
+                <StackPanel Grid.Column="1" 
+                           Orientation="Horizontal"
+                           Spacing="8">
+                    <Button Content="Clear All" 
+                           Command="{Binding ClearFlowsCommand}"
+                           Classes="actionButton"/>
+                    <Button Content="Export" 
+                           Command="{Binding ExportFlowsCommand}"
+                           Classes="actionButton"/>
+                    <Button Content="{Binding ToggleProxyButtonText}" 
+                           Command="{Binding ToggleProxyCommand}"
+                           Classes="primaryButton"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" MinWidth="200" MaxWidth="400"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel - Request List -->
+            <Border Grid.Column="0"
+                   Background="#121212">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Search Box -->
+                    <Border Grid.Row="0"
+                           Background="#181818"
+                           CornerRadius="6"
+                           Padding="8,6"
+                           Margin="12,12,12,6">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" 
+                                     Text="🔍" 
+                                     VerticalAlignment="Center"
+                                     Margin="0,0,6,0"
+                                     Foreground="#7C7C7C"/>
+                            <TextBox Grid.Column="1" 
+                                    Text="{Binding SearchText}"
+                                    Watermark="Search..."
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    FontSize="12"
+                                    Foreground="#FFFFFF"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Filter Tabs -->
+                    <StackPanel Grid.Row="1" 
+                               Orientation="Horizontal"
+                               Margin="12,6,12,6"
+                               Spacing="2">
+                        <Button Content="All" 
+                               Classes="filterButton active"
+                               Command="{Binding SetFilterCommand}"
+                               CommandParameter="All"/>
+                        <Button Content="GET" 
+                               Classes="filterButton"
+                               Command="{Binding SetFilterCommand}"
+                               CommandParameter="GET"/>
+                        <Button Content="POST" 
+                               Classes="filterButton"
+                               Command="{Binding SetFilterCommand}"
+                               CommandParameter="POST"/>
+                        <Button Content="Errors" 
+                               Classes="filterButton"
+                               Command="{Binding SetFilterCommand}"
+                               CommandParameter="Errors"/>
+                    </StackPanel>
+
+                    <!-- Request List -->
+                    <ListBox Grid.Row="2"
+                            ItemsSource="{Binding FlowItems}"
+                            SelectedItem="{Binding SelectedFlow}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Margin="0,0,0,12"
+                            Padding="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#181818"
+                                       Padding="12,8"
+                                       Margin="0"
+                                       CornerRadius="6">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Method, Status, URL -->
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" 
+                                                     Text="{Binding Method}" 
+                                                     FontWeight="Bold"
+                                                     FontSize="11">
+                                                <TextBlock.Foreground>
+                                                    <SolidColorBrush Color="{Binding MethodColor}"/>
+                                                </TextBlock.Foreground>
+                                            </TextBlock>
+
+                                            <TextBlock Grid.Column="1" 
+                                                     Text="{Binding Status}" 
+                                                     FontWeight="Bold"
+                                                     FontSize="11"
+                                                     Margin="6,0,0,0">
+                                                <TextBlock.Foreground>
+                                                    <SolidColorBrush Color="{Binding StatusColor}"/>
+                                                </TextBlock.Foreground>
+                                            </TextBlock>
+
+                                            <TextBlock Grid.Column="2" 
+                                                     Text="{Binding DisplayUrl}" 
+                                                     FontWeight="Medium"
+                                                     Foreground="#FFFFFF"
+                                                     Margin="10,0,0,0"
+                                                     FontSize="12"
+                                                     TextTrimming="CharacterEllipsis"
+                                                     HorizontalAlignment="Stretch"/>
+
+                                            <TextBlock Grid.Column="3" 
+                                                     Text="{Binding FormattedDuration}" 
+                                                     Foreground="#7C7C7C"
+                                                     FontSize="10"
+                                                     Margin="6,0,0,0"/>
+
+                                            <TextBlock Grid.Column="4" 
+                                                     Text="{Binding FormattedSize}" 
+                                                     Foreground="#7C7C7C"
+                                                     FontSize="10"
+                                                     Margin="6,0,0,0"/>
+                                        </Grid>
+
+                                        <!-- Time and Host -->
+                                        <Grid Grid.Row="1" Margin="0,2,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" 
+                                                     Text="{Binding Host}" 
+                                                     Foreground="#7C7C7C"
+                                                     FontSize="10"
+                                                     TextTrimming="CharacterEllipsis"
+                                                     HorizontalAlignment="Stretch"/>
+
+                                            <TextBlock Grid.Column="1" 
+                                                     Text="{Binding RequestTime, StringFormat='{}{0:HH:mm:ss}'}" 
+                                                     Foreground="#7C7C7C"
+                                                     FontSize="10"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <!-- Splitter -->
+            <GridSplitter Grid.Column="1" 
+                         Background="#282828"
+                         HorizontalAlignment="Stretch"/>
+
+            <!-- Right Panel - Request/Response Details -->
+            <Border Grid.Column="2"
+                   Background="#121212">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Details Header -->
+                    <Border Grid.Row="0"
+                           Background="#181818"
+                           BorderBrush="#282828"
+                           BorderThickness="0,0,0,1"
+                           Padding="16,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Request Info -->
+                            <StackPanel Grid.Column="0" 
+                                       Orientation="Vertical"
+                                       IsVisible="{Binding SelectedFlow}">
+                                <TextBlock Text="{Binding SelectedFlow.FullUrl}" 
+                                         FontWeight="Medium"
+                                         FontSize="14"
+                                         Foreground="#FFFFFF"
+                                         TextTrimming="CharacterEllipsis"/>
+                                <StackPanel Orientation="Horizontal" 
+                                           Spacing="12"
+                                           Margin="0,4,0,0">
+                                    <TextBlock Text="{Binding SelectedFlow.Method}" 
+                                             FontWeight="Bold"
+                                             FontSize="12">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{Binding SelectedFlow.MethodColor}"/>
+                                        </TextBlock.Foreground>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding SelectedFlow.Status}" 
+                                             FontWeight="Bold"
+                                             FontSize="12">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{Binding SelectedFlow.StatusColor}"/>
+                                        </TextBlock.Foreground>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding SelectedFlow.StatusText}" 
+                                             Foreground="#B3B3B3"
+                                             FontSize="12"/>
+                                    <TextBlock Text="{Binding SelectedFlow.FormattedDuration}" 
+                                             Foreground="#7C7C7C"
+                                             FontSize="11"/>
+                                    <TextBlock Text="{Binding SelectedFlow.FormattedSize}" 
+                                             Foreground="#7C7C7C"
+                                             FontSize="11"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Actions -->
+                            <StackPanel Grid.Column="1" 
+                                       Orientation="Horizontal"
+                                       Spacing="8"
+                                       IsVisible="{Binding SelectedFlow}">
+                                <Button Content="Replay" 
+                                       Command="{Binding ReplayFlowCommand}"
+                                       CommandParameter="{Binding SelectedFlow}"
+                                       Classes="ghostButton"/>
+                                <Button Content="Delete" 
+                                       Command="{Binding DeleteFlowCommand}"
+                                       CommandParameter="{Binding SelectedFlow}"
+                                       Classes="dangerButton"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Request/Response Content -->
+                    <Grid Grid.Row="1">
+                        <StackPanel IsVisible="{Binding SelectedFlow}">
+                            <!-- Request Section -->
+                            <Border Background="#181818"
+                                   CornerRadius="8"
+                                   Padding="16"
+                                   Margin="0,0,0,16">
+                                <StackPanel>
+                                    <TextBlock Text="📤 Request" 
+                                             FontSize="14"
+                                             FontWeight="600"
+                                             Foreground="#FFFFFF"
+                                             Margin="0,0,0,12"/>
+
+                                    <!-- Request Overview -->
+                                    <Grid Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Protocol:" FontWeight="Medium" Foreground="#B3B3B3" FontSize="12"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelectedFlow.Protocol}" Foreground="#FFFFFF" FontSize="12" Margin="8,0,0,0"/>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Host:" FontWeight="Medium" Foreground="#B3B3B3" FontSize="12" Margin="0,4,0,0"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SelectedFlow.Host}" Foreground="#FFFFFF" FontSize="12" Margin="8,4,0,0"/>
+
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Path:" FontWeight="Medium" Foreground="#B3B3B3" FontSize="12" Margin="0,4,0,0"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SelectedFlow.Path}" Foreground="#FFFFFF" FontSize="12" Margin="8,4,0,0"/>
+
+                                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Client IP:" FontWeight="Medium" Foreground="#B3B3B3" FontSize="12" Margin="0,4,0,0"/>
+                                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding SelectedFlow.ClientIp}" Foreground="#FFFFFF" FontSize="12" Margin="8,4,0,0"/>
+
+                                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Server IP:" FontWeight="Medium" Foreground="#B3B3B3" FontSize="12" Margin="0,4,0,0"/>
+                                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding SelectedFlow.ServerIp}" Foreground="#FFFFFF" FontSize="12" Margin="8,4,0,0"/>
+                                    </Grid>
+
+                                    <!-- Request Headers -->
+                                    <Expander Header="Headers" 
+                                             IsExpanded="True"
+                                             HorizontalContentAlignment="Stretch"
+                                             Margin="0,0,0,12">
+                                        <ListBox ItemsSource="{Binding SelectedFlow.RequestHeaders}"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Margin="0,8,0,0"
+                                                HorizontalAlignment="Stretch">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="0,2" HorizontalAlignment="Stretch">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="120"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" 
+                                                                 Text="{Binding Key}" 
+                                                                 FontWeight="Medium"
+                                                                 Foreground="#B3B3B3"
+                                                                 FontSize="12"/>
+                                                        <TextBlock Grid.Column="1" 
+                                                                 Text="{Binding Value}" 
+                                                                 Foreground="#FFFFFF"
+                                                                 FontSize="12"
+                                                                 TextWrapping="Wrap"
+                                                                 HorizontalAlignment="Stretch"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </Expander>
+
+                                    <!-- Request Body -->
+                                    <Expander Header="Body" 
+                                             IsExpanded="{Binding SelectedFlow.RequestBody, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                             HorizontalContentAlignment="Stretch">
+                                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                     VerticalScrollBarVisibility="Auto"
+                                                     MaxHeight="200"
+                                                     Margin="0,8,0,0"
+                                                     HorizontalAlignment="Stretch">
+                                            <TextBlock Text="{Binding SelectedFlow.RequestBody}" 
+                                                     FontFamily="Consolas,monospace"
+                                                     FontSize="11"
+                                                     Foreground="#FFFFFF"
+                                                     Background="#282828"
+                                                     Padding="12"
+                                                     HorizontalAlignment="Stretch"/>
+                                        </ScrollViewer>
+                                    </Expander>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Response Section -->
+                            <Border Background="#181818"
+                                   CornerRadius="8"
+                                   Padding="16"
+                                   Margin="0,0,0,16">
+                                <StackPanel>
+                                    <TextBlock Text="📥 Response" 
+                                             FontSize="14"
+                                             FontWeight="600"
+                                             Foreground="#FFFFFF"
+                                             Margin="0,0,0,12"/>
+
+                                    <!-- Response Overview -->
+                                    <Grid Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Status:" FontWeight="Medium" Foreground="#B3B3B3" FontSize="12"/>
+                                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="8,0,0,0">
+                                            <TextBlock Text="{Binding SelectedFlow.Status}" FontWeight="Bold">
+                                                <TextBlock.Foreground>
+                                                    <SolidColorBrush Color="{Binding SelectedFlow.StatusColor}"/>
+                                                </TextBlock.Foreground>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlow.StatusText}" Foreground="#FFFFFF" FontSize="12"/>
+                                        </StackPanel>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Content Type:" FontWeight="Medium" Foreground="#B3B3B3" FontSize="12" Margin="0,4,0,0"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SelectedFlow.ContentType}" Foreground="#FFFFFF" FontSize="12" Margin="8,4,0,0"/>
+
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Encoding:" FontWeight="Medium" Foreground="#B3B3B3" FontSize="12" Margin="0,4,0,0"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SelectedFlow.ContentEncoding}" Foreground="#FFFFFF" FontSize="12" Margin="8,4,0,0"/>
+                                    </Grid>
+
+                                    <!-- Response Headers -->
+                                    <Expander Header="Headers" 
+                                             IsExpanded="True"
+                                             HorizontalContentAlignment="Stretch"
+                                             Margin="0,0,0,12">
+                                        <ListBox ItemsSource="{Binding SelectedFlow.ResponseHeaders}"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Margin="0,8,0,0"
+                                                HorizontalAlignment="Stretch">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="0,2" HorizontalAlignment="Stretch">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="120"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" 
+                                                                 Text="{Binding Key}" 
+                                                                 FontWeight="Medium"
+                                                                 Foreground="#B3B3B3"
+                                                                 FontSize="12"/>
+                                                        <TextBlock Grid.Column="1" 
+                                                                 Text="{Binding Value}" 
+                                                                 Foreground="#FFFFFF"
+                                                                 FontSize="12"
+                                                                 TextWrapping="Wrap"
+                                                                 HorizontalAlignment="Stretch"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </Expander>
+
+                                    <!-- Response Body -->
+                                    <Expander Header="Body" 
+                                             IsExpanded="{Binding SelectedFlow.ResponseBody, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                             HorizontalContentAlignment="Stretch">
+                                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                     VerticalScrollBarVisibility="Auto"
+                                                     MaxHeight="300"
+                                                     Margin="0,8,0,0"
+                                                     HorizontalAlignment="Stretch">
+                                            <TextBlock Text="{Binding SelectedFlow.ResponseBody}" 
+                                                     FontFamily="Consolas,monospace"
+                                                     FontSize="11"
+                                                     Foreground="#FFFFFF"
+                                                     Background="#282828"
+                                                     Padding="12"
+                                                     HorizontalAlignment="Stretch"/>
+                                        </ScrollViewer>
+                                    </Expander>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <!-- Empty State -->
+                        <StackPanel HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   IsVisible="{Binding SelectedFlow, Converter={x:Static ObjectConverters.IsNull}}">
+                            <TextBlock Text="📭" 
+                                     FontSize="48"
+                                     HorizontalAlignment="Center"
+                                     Foreground="#7C7C7C"/>
+                            <TextBlock Text="Select a request to view details" 
+                                     FontSize="14"
+                                     Foreground="#7C7C7C"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,16,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

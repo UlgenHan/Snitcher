@@ -1,0 +1,760 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:Snitcher.UI.Desktop.ViewModels"
+        xmlns:models="clr-namespace:Snitcher.UI.Desktop.Models.WorkSpaces"
+        xmlns:ic="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+        x:Class="Snitcher.UI.Desktop.SnitcherMainWindow"
+        x:DataType="vm:SnitcherMainViewModel"
+        x:Name="MainWindow"
+        Title="Snitcher - API Development Platform"
+        Width="1200" Height="800"
+        MinWidth="800" MinHeight="600"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="40">
+
+    <Design.Width>1200</Design.Width>
+    <Design.Height>800</Design.Height>
+
+    <Grid Background="#121212">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Custom Title Bar -->
+        <Border Grid.Row="0" Background="#0A0A0A">
+            <Grid ColumnDefinitions="*,Auto">
+                <!-- Drag Area -->
+                <Border Grid.Column="0" 
+                        Background="Transparent" 
+                        IsHitTestVisible="True"
+                        PointerPressed="OnTitleBarPointerPressed">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <!-- App Icon -->
+                        <Border Grid.Column="0" 
+                                Background="#1DB954" 
+                                CornerRadius="8" 
+                                Width="24" Height="24" 
+                                Margin="12,8,8,8">
+                            <TextBlock Text="S"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        
+                        <!-- Window Title -->
+                        <StackPanel Grid.Column="1" 
+                                    Orientation="Horizontal" 
+                                    VerticalAlignment="Center"
+                                    Margin="8,0,0,0">
+                            <TextBlock Text="Snitcher" 
+                                       FontSize="14" 
+                                       FontWeight="SemiBold" 
+                                       Foreground="White"/>
+                            <TextBlock Text=" - API Development Platform" 
+                                       FontSize="12" 
+                                       Foreground="#888888"
+                                       Margin="4,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                
+                <!-- Window Controls -->
+                <StackPanel Grid.Column="1" 
+                            Orientation="Horizontal" 
+                            IsHitTestVisible="True">
+                    <!-- Minimize Button -->
+                    <Button Name="MinimizeButton"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Width="46" Height="32"
+                            Cursor="Hand"
+                            ToolTip.Tip="Minimize"
+                            Click="OnMinimizeClick">
+                        <ic:FluentIcon Icon="LineHorizontal1" 
+                                       Width="12" Height="12" 
+                                       Foreground="#CCCCCC"/>
+                    </Button>
+                    
+                    <!-- Maximize/Restore Button -->
+                    <Button Name="MaximizeButton"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Width="46" Height="32"
+                            Cursor="Hand"
+                            ToolTip.Tip="Maximize"
+                            Click="OnMaximizeClick">
+                        <ic:FluentIcon Icon="ArrowMaximize" 
+                                       Width="12" Height="12" 
+                                       Foreground="#CCCCCC"/>
+                    </Button>
+                    
+                    <!-- Close Button -->
+                    <Button Name="CloseButton"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Width="46" Height="32"
+                            Cursor="Hand"
+                            ToolTip.Tip="Close"
+                            Click="OnCloseClick">
+                        <ic:FluentIcon Icon="Dismiss" 
+                                       Width="12" Height="12" 
+                                       Foreground="#CCCCCC"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Sidebar -->
+            <Border Grid.Column="0" Background="#000000" Padding="8">
+                <Grid RowDefinitions="Auto,*">
+                    <!-- Logo Section -->
+                    <Grid Grid.Row="0" Margin="16,16,16,24">
+                        <StackPanel Spacing="16">
+                            <Border Background="#1DB954" CornerRadius="50" Width="56" Height="56" HorizontalAlignment="Center">
+                                <TextBlock Text="S"
+                                           FontSize="32"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="Snitcher"
+                                           FontSize="24"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="API Development Platform"
+                                           FontSize="12"
+                                           Foreground="#B3B3B3"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Navigation -->
+                    <ScrollViewer Grid.Row="1" Margin="8,0,8,0">
+                        <StackPanel Spacing="4">
+                            <Border Background="#282828" CornerRadius="4" Padding="16,8" Cursor="Hand">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <ic:FluentIcon Grid.Column="0" Icon="Home" Width="16" Height="16" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="Home" FontSize="14" Foreground="White" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                </Grid>
+                            </Border>
+
+                            <Border Background="Transparent" CornerRadius="4" Padding="16,8" Cursor="Hand">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <ic:FluentIcon Grid.Column="0" Icon="Search" Width="16" Height="16" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="Search" FontSize="14" Foreground="#B3B3B3" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                </Grid>
+                            </Border>
+
+                            <Border Background="Transparent" CornerRadius="4" Padding="16,8" Cursor="Hand">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <ic:FluentIcon Grid.Column="0" Icon="Library" Width="16" Height="16" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="Your Library" FontSize="14" Foreground="#B3B3B3" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                </Grid>
+                            </Border>
+
+                            <Border Height="1" Background="#282828" Margin="8,16,8,16"/>
+
+                            <TextBlock Text="WORKSPACES" FontSize="12" FontWeight="Bold" Foreground="#B3B3B3" Margin="16,0,0,8"/>
+                            <ItemsControl ItemsSource="{Binding Workspaces}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="models:Workspace" x:DataType="models:Workspace">
+                                        <Button Background="Transparent"
+                                                BorderThickness="0"
+                                                Padding="16,8"
+                                                Cursor="Hand"
+                                                Margin="0,0,0,2"
+                                                Command="{Binding ElementName=MainWindow, Path=DataContext.OpenWorkspaceCommand}"
+                                                CommandParameter="{Binding}">
+                                            <Grid ColumnDefinitions="Auto,*">
+                                                <ic:FluentIcon Grid.Column="0" Icon="Folder" Width="16" Height="16" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="14" Foreground="#B3B3B3" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                            </Grid>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <Border Height="1" Background="#282828" Margin="8,16,8,16"/>
+
+                            <TextBlock Text="RECENT PROJECTS" FontSize="12" FontWeight="Bold" Foreground="#B3B3B3" Margin="16,0,0,8"/>
+                            <ItemsControl ItemsSource="{Binding RecentProjects}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="models:Project" x:DataType="models:Project">
+                                        <Button Background="Transparent"
+                                                BorderThickness="0"
+                                                Padding="16,8"
+                                                Cursor="Hand"
+                                                Margin="0,0,0,2"
+                                                Command="{Binding ElementName=MainWindow, Path=DataContext.OpenProjectCommand}"
+                                                CommandParameter="{Binding}">
+                                            <Grid ColumnDefinitions="Auto,*">
+                                                <ic:FluentIcon Grid.Column="0" Icon="Code" Width="16" Height="16" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="14" Foreground="#B3B3B3" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                            </Grid>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- Main Content Area -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Top Bar -->
+                <Border Grid.Row="0" Background="#181818" Padding="24" Height="88">
+                    <Grid ColumnDefinitions="*,Auto" VerticalAlignment="Center">
+                        <!-- Search Box -->
+                        <Border Grid.Column="0" 
+                                Background="#2A2A2A" 
+                                CornerRadius="20" 
+                                Padding="12,8" 
+                                Width="500"
+                                HorizontalAlignment="Left">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBox Grid.Column="0"
+                                         Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                                         Watermark="Search workspaces, projects and descriptions..."
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         Foreground="White"
+                                         FontSize="14"
+                                         VerticalAlignment="Center"/>
+                                <Button Grid.Column="1"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Padding="8"
+                                        Command="{Binding SearchCommand}">
+                                    <ic:FluentIcon Icon="Search" Width="16" Height="16" Foreground="#B3B3B3"/>
+                                </Button>
+                            </Grid>
+                        </Border>
+                        
+                        <!-- Create Workspace Button -->
+                        <Button Grid.Column="1"
+                                Background="#1DB954"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Padding="16,8"
+                                FontSize="14"
+                                CornerRadius="20"
+                                HorizontalAlignment="Right"
+                                Command="{Binding CreateWorkspaceCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <ic:FluentIcon Icon="Add" Width="16" Height="16"/>
+                                <TextBlock Text="Create workspace"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- Content Area -->
+                <ScrollViewer Grid.Row="1" Background="#121212" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="32" Margin="32">
+                        <!-- Search Results (shown when searching) -->
+                        <Border IsVisible="{Binding ShowSearchResults}" Background="#1A1A1A" CornerRadius="12" Padding="20" Margin="0,0,0,24">
+                            <StackPanel Spacing="16">
+                                <TextBlock Text="Search Results" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                                
+                                <!-- Search Result Workspaces -->
+                                <StackPanel IsVisible="{Binding SearchResults.Workspaces.Count}" Spacing="12">
+                                    <TextBlock Text="Workspaces" FontSize="14" FontWeight="SemiBold" Foreground="#B3B3B3"/>
+                                    <ItemsControl ItemsSource="{Binding SearchResults.Workspaces}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="models:Workspace" x:DataType="models:Workspace">
+                                                <Button Background="#252525" CornerRadius="8" Padding="16" Margin="0,0,0,8" Cursor="Hand"
+                                                        Command="{Binding ElementName=MainWindow, Path=DataContext.OpenWorkspaceCommand}"
+                                                        CommandParameter="{Binding}">
+                                                    <Grid ColumnDefinitions="*,Auto">
+                                                        <StackPanel Grid.Column="0" Spacing="4">
+                                                            <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
+                                                            <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#B3B3B3"/>
+                                                        </StackPanel>
+                                                        <ic:FluentIcon Grid.Column="1" Icon="ChevronRight" Width="16" Height="16" Foreground="#B3B3B3" VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                
+                                <!-- Search Result Projects -->
+                                <StackPanel IsVisible="{Binding SearchResults.Projects.Count}" Spacing="12">
+                                    <TextBlock Text="Projects" FontSize="14" FontWeight="SemiBold" Foreground="#B3B3B3"/>
+                                    <ItemsControl ItemsSource="{Binding SearchResults.Projects}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="models:Project" x:DataType="models:Project">
+                                                <Button Background="#252525" CornerRadius="8" Padding="16" Margin="0,0,0,8" Cursor="Hand"
+                                                        Command="{Binding ElementName=MainWindow, Path=DataContext.OpenProjectCommand}"
+                                                        CommandParameter="{Binding}">
+                                                    <Grid ColumnDefinitions="*,Auto">
+                                                        <StackPanel Grid.Column="0" Spacing="4">
+                                                            <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
+                                                            <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#B3B3B3"/>
+                                                        </StackPanel>
+                                                        <ic:FluentIcon Grid.Column="1" Icon="ChevronRight" Width="16" Height="16" Foreground="#B3B3B3" VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                
+                                <!-- No Results Message -->
+                                <StackPanel IsVisible="{Binding ShowSearchResults}">
+                                    <TextBlock Text="No results found" FontSize="14" Foreground="#B3B3B3" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Workspace Detail View (shown when workspace is opened) -->
+                        <Border IsVisible="{Binding IsWorkspaceOpened}" Background="#1A1A1A" CornerRadius="12" Padding="20">
+                            <StackPanel Spacing="20">
+                                <!-- Workspace Header -->
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <StackPanel Grid.Column="0" Spacing="8">
+                                        <TextBlock Text="{Binding SelectedWorkspace.Name}" 
+                                                   FontSize="24" 
+                                                   FontWeight="Bold" 
+                                                   Foreground="White"/>
+                                        <TextBlock Text="{Binding SelectedWorkspace.Description}" 
+                                                   FontSize="14" 
+                                                   Foreground="#B3B3B3"/>
+                                        <TextBlock Text="{Binding SelectedWorkspace.ProjectCountText}" 
+                                                   FontSize="12" 
+                                                   Foreground="#888888"/>
+                                    </StackPanel>
+                                    <Button Grid.Column="1"
+                                            Content="Close Workspace"
+                                            Background="Transparent"
+                                            Foreground="White"
+                                            BorderThickness="1"
+                                            BorderBrush="White"
+                                            Padding="16,8"
+                                            FontSize="13"
+                                            FontWeight="Medium"
+                                            CornerRadius="6"
+                                            Command="{Binding CloseWorkspaceCommand}"/>
+                                </Grid>
+
+                                <!-- Projects Section -->
+                                <StackPanel Spacing="16">
+                                    <StackPanel Orientation="Horizontal" Spacing="12">
+                                        <TextBlock Text="Projects" FontSize="18" FontWeight="SemiBold" Foreground="White"/>
+                                        <Button Content="New Project"
+                                                Background="#1DB954"
+                                                Foreground="White"
+                                                BorderThickness="0"
+                                                Padding="12,6"
+                                                FontSize="12"
+                                                FontWeight="Medium"
+                                                CornerRadius="6"
+                                                Command="{Binding CreateProjectCommand}"
+                                                CommandParameter="{Binding SelectedWorkspace}"/>
+                                    </StackPanel>
+                                    
+                                    <ItemsControl ItemsSource="{Binding SelectedWorkspace.Projects}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" ItemWidth="300" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="models:Project" x:DataType="models:Project">
+                                                <Border Background="#252525"
+                                                       BorderBrush="#333333"
+                                                       BorderThickness="1"
+                                                       CornerRadius="8"
+                                                       Padding="16"
+                                                       Margin="8"
+                                                       Width="280"
+                                                       PointerPressed="OnProjectPointerPressed">
+                                                    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto">
+                                                        <!-- Project Header -->
+                                                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                                            <StackPanel Grid.Column="0" Spacing="4">
+                                                                <TextBlock Text="{Binding Name}" 
+                                                                           FontSize="14" 
+                                                                           FontWeight="SemiBold" 
+                                                                           Foreground="White"/>
+                                                                <TextBlock Text="{Binding Description}" 
+                                                                           FontSize="12" 
+                                                                           Foreground="#B3B3B3"/>
+                                                            </StackPanel>
+                                                            <Menu Grid.Column="1">
+                                                                <MenuItem Background="Transparent" Foreground="#666666">
+                                                                    <MenuItem.Header>
+                                                                        <Button Background="Transparent"
+                                                                                Foreground="#666666"
+                                                                                BorderThickness="0"
+                                                                                Padding="4"
+                                                                                Width="24" Height="24">
+                                                                            <ic:FluentIcon Icon="MoreVertical" Width="16" Height="16"/>
+                                                                        </Button>
+                                                                    </MenuItem.Header>
+                                                                    <MenuItem Header="Delete" 
+                                                                              Command="{Binding ElementName=MainWindow, Path=DataContext.DeleteProjectCommand}"
+                                                                              CommandParameter="{Binding}"/>
+                                                                </MenuItem>
+                                                            </Menu>
+                                                        </Grid>
+
+                                                        <!-- Project Path -->
+                                                        <StackPanel Grid.Row="1" Spacing="8" Margin="0,12,0,0">
+                                                            <Border Background="#1A1A1A" 
+                                                                   CornerRadius="6" 
+                                                                   Padding="12,8"
+                                                                   HorizontalAlignment="Stretch">
+                                                                <Grid ColumnDefinitions="Auto,*">
+                                                                    <ic:FluentIcon Grid.Column="0" 
+                                                                                 Icon="Code" 
+                                                                                 Width="16" Height="16" 
+                                                                                 Foreground="#1DB954" 
+                                                                                 VerticalAlignment="Center"/>
+                                                                    <TextBlock Grid.Column="1" 
+                                                                               Text="{Binding Path}" 
+                                                                               FontSize="12" 
+                                                                               FontWeight="Medium" 
+                                                                               Foreground="#CCCCCC" 
+                                                                               VerticalAlignment="Center" 
+                                                                               Margin="8,0,0,0"
+                                                                               TextTrimming="CharacterEllipsis"/>
+                                                                </Grid>
+                                                            </Border>
+                                                        </StackPanel>
+
+                                                        <!-- Action Button -->
+                                                        <Button Grid.Row="2" 
+                                                                Content="Open Project"
+                                                                Background="Transparent"
+                                                                Foreground="White"
+                                                                BorderThickness="1"
+                                                                BorderBrush="White"
+                                                                Padding="16,8"
+                                                                FontSize="13"
+                                                                FontWeight="Medium"
+                                                                CornerRadius="6"
+                                                                Margin="0,12,0,0"
+                                                                Click="OnProjectButtonClick"
+                                                                Tag="{Binding}"/>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    
+                                    <!-- No Projects Message -->
+                                    <TextBlock Text="No projects in this workspace. Click 'New Project' to get started."
+                                               FontSize="14" 
+                                               Foreground="#888888" 
+                                               HorizontalAlignment="Center"
+                                               Margin="0,20,0,0"
+                                               IsVisible="False"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Main Content (shown when not searching and no workspace opened) -->
+                        <StackPanel IsVisible="{Binding IsNotWorkspaceOpenedAndNotSearching}" Spacing="32">
+                            <!-- Your Workspaces -->
+                            <StackPanel Spacing="16">
+                                <TextBlock Text="Your Workspaces" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                                
+                                <ItemsControl ItemsSource="{Binding Workspaces}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" ItemWidth="284" MaxWidth="1704" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="models:Workspace" x:DataType="models:Workspace">
+                                            <Border Background="#0F0F0F"
+                                                   BorderBrush="#1A1A1A"
+                                                   BorderThickness="1"
+                                                   CornerRadius="12"
+                                                   Padding="20"
+                                                   Width="260"
+                                                   Height="240"
+                                                   Margin="12"
+                                                   HorizontalAlignment="Stretch"
+                                                   Effect="drop-shadow(0 4 16 #40000000)">
+                                                <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto">
+                                                    <!-- Header with title and menu -->
+                                                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                                        <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                                            <TextBlock Text="{Binding Name}" 
+                                                                       FontSize="16" 
+                                                                       FontWeight="SemiBold" 
+                                                                       Foreground="White" 
+                                                                       TextWrapping="Wrap"
+                                                                       LineHeight="20"/>
+                                                            <TextBlock Text="{Binding Description}" 
+                                                                       FontSize="12" 
+                                                                       FontWeight="Normal" 
+                                                                       Foreground="#999999" 
+                                                                       TextWrapping="Wrap"
+                                                                       LineHeight="16"
+                                                                       MaxHeight="32"
+                                                                       TextTrimming="CharacterEllipsis"/>
+                                                        </StackPanel>
+                                                        <Button Grid.Column="1"
+                                                                Background="Transparent"
+                                                                Foreground="#666666"
+                                                                BorderThickness="0"
+                                                                Padding="4"
+                                                                Width="28" Height="28"
+                                                                CornerRadius="6"
+                                                                VerticalAlignment="Top"
+                                                                HorizontalAlignment="Right"
+                                                                ToolTip.Tip="Options">
+                                                            <Button.Flyout>
+                                                                <MenuFlyout>
+                                                                    <MenuItem Header="Delete"
+                                                                              Command="{Binding ElementName=MainWindow, Path=DataContext.DeleteWorkspaceCommand}"
+                                                                              CommandParameter="{Binding}">
+                                                                        <MenuItem.Icon>
+                                                                            <ic:FluentIcon Icon="Delete" Width="14" Height="14"/>
+                                                                        </MenuItem.Icon>
+                                                                    </MenuItem>
+                                                                </MenuFlyout>
+                                                            </Button.Flyout>
+                                                            <ic:FluentIcon Icon="MoreVertical" Width="16" Height="16"/>
+                                                        </Button>
+                                                    </Grid>
+
+                                                    <!-- Center content with stats -->
+                                                    <StackPanel Grid.Row="1" VerticalAlignment="Center" Spacing="8">
+                                                        <Border Background="#1A1A1A" 
+                                                               CornerRadius="6" 
+                                                               Padding="12,8"
+                                                               HorizontalAlignment="Stretch">
+                                                            <Grid ColumnDefinitions="Auto,*">
+                                                                <ic:FluentIcon Grid.Column="0" 
+                                                                             Icon="Folder" 
+                                                                             Width="16" Height="16" 
+                                                                             Foreground="#1DB954" 
+                                                                             VerticalAlignment="Center"/>
+                                                                <TextBlock Grid.Column="1" 
+                                                                           Text="{Binding ProjectCountText}" 
+                                                                           FontSize="12" 
+                                                                           FontWeight="Medium" 
+                                                                           Foreground="#CCCCCC" 
+                                                                           VerticalAlignment="Center" 
+                                                                           Margin="8,0,0,0"/>
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Background="#1A1A1A" 
+                                                               CornerRadius="6" 
+                                                               Padding="12,8"
+                                                               HorizontalAlignment="Stretch">
+                                                            <Grid ColumnDefinitions="Auto,*">
+                                                                <ic:FluentIcon Grid.Column="0" 
+                                                                             Icon="Clock" 
+                                                                             Width="16" Height="16" 
+                                                                             Foreground="#1DB954" 
+                                                                             VerticalAlignment="Center"/>
+                                                                <TextBlock Grid.Column="1" 
+                                                                           Text="{Binding UpdatedAtRelative}" 
+                                                                           FontSize="12" 
+                                                                           FontWeight="Medium" 
+                                                                           Foreground="#CCCCCC" 
+                                                                           VerticalAlignment="Center" 
+                                                                           Margin="8,0,0,0"/>
+                                                            </Grid>
+                                                        </Border>
+                                                    </StackPanel>
+
+                                                    <!-- Action buttons -->
+                                                    <Grid Grid.Row="2" ColumnDefinitions="*,*" Margin="0,6,0,0">
+                                                        <Button Grid.Column="0"
+                                                                Content="Open"
+                                                                Background="#1DB954"
+                                                                Foreground="White"
+                                                                BorderThickness="0"
+                                                                Padding="16,8"
+                                                                FontSize="13"
+                                                                FontWeight="Medium"
+                                                                CornerRadius="6"
+                                                                Margin="0,0,4,0"
+                                                                Command="{Binding ElementName=MainWindow, Path=DataContext.OpenWorkspaceCommand}"
+                                                                CommandParameter="{Binding}"/>
+                                                        <Button Grid.Column="1"
+                                                                Content="New Project"
+                                                                Background="Transparent"
+                                                                Foreground="#1DB954"
+                                                                BorderThickness="1"
+                                                                BorderBrush="#1DB954"
+                                                                Padding="16,8"
+                                                                FontSize="13"
+                                                                FontWeight="Medium"
+                                                                CornerRadius="6"
+                                                                Margin="4,0,0,0"
+                                                                Command="{Binding ElementName=MainWindow, Path=DataContext.CreateProjectCommand}"
+                                                                CommandParameter="{Binding}"/>
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+
+                            <!-- Recently Played Projects -->
+                            <StackPanel Spacing="16">
+                                <TextBlock Text="Recently Played Projects" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                                
+                                <ItemsControl ItemsSource="{Binding RecentProjects}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" ItemWidth="284" MaxWidth="1704" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="models:Project" x:DataType="models:Project">
+                                            <Border Background="#0F0F0F"
+                                                   BorderBrush="#1A1A1A"
+                                                   BorderThickness="1"
+                                                   CornerRadius="12"
+                                                   Padding="20"
+                                                   Width="260"
+                                                   Height="240"
+                                                   Margin="12"
+                                                   HorizontalAlignment="Stretch"
+                                                   Effect="drop-shadow(0 4 16 #40000000)"
+                                                   PointerPressed="OnProjectPointerPressed">
+                                                <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto">
+                                                    <!-- Header with title and menu -->
+                                                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                                        <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                                            <TextBlock Text="{Binding Name}" 
+                                                                       FontSize="16" 
+                                                                       FontWeight="SemiBold" 
+                                                                       Foreground="White" 
+                                                                       TextWrapping="Wrap"
+                                                                       LineHeight="20"/>
+                                                            <TextBlock Text="{Binding Description}" 
+                                                                       FontSize="12" 
+                                                                       FontWeight="Normal" 
+                                                                       Foreground="#999999" 
+                                                                       TextWrapping="Wrap"
+                                                                       LineHeight="16"
+                                                                       MaxHeight="32"
+                                                                       TextTrimming="CharacterEllipsis"/>
+                                                        </StackPanel>
+                                                        <Button Grid.Column="1"
+                                                                Background="Transparent"
+                                                                Foreground="#666666"
+                                                                BorderThickness="0"
+                                                                Padding="4"
+                                                                Width="28" Height="28"
+                                                                CornerRadius="6"
+                                                                VerticalAlignment="Top"
+                                                                HorizontalAlignment="Right"
+                                                                ToolTip.Tip="Options">
+                                                            <Button.Flyout>
+                                                                <MenuFlyout>
+                                                                    <MenuItem Header="Delete"
+                                                                              Command="{Binding ElementName=MainWindow, Path=DataContext.DeleteProjectCommand}"
+                                                                              CommandParameter="{Binding}">
+                                                                        <MenuItem.Icon>
+                                                                            <ic:FluentIcon Icon="Delete" Width="14" Height="14"/>
+                                                                        </MenuItem.Icon>
+                                                                    </MenuItem>
+                                                                </MenuFlyout>
+                                                            </Button.Flyout>
+                                                            <ic:FluentIcon Icon="MoreVertical" Width="16" Height="16"/>
+                                                        </Button>
+                                                    </Grid>
+
+                                                    <!-- Center content with stats -->
+                                                    <StackPanel Grid.Row="1" VerticalAlignment="Center" Spacing="8">
+                                                        <Border Background="#1A1A1A" 
+                                                               CornerRadius="6" 
+                                                               Padding="12,8"
+                                                               HorizontalAlignment="Stretch">
+                                                            <Grid ColumnDefinitions="Auto,*">
+                                                                <ic:FluentIcon Grid.Column="0" 
+                                                                             Icon="Code" 
+                                                                             Width="16" Height="16" 
+                                                                             Foreground="#1DB954" 
+                                                                             VerticalAlignment="Center"/>
+                                                                <TextBlock Grid.Column="1" 
+                                                                           Text="{Binding Path}" 
+                                                                           FontSize="12" 
+                                                                           FontWeight="Medium" 
+                                                                           Foreground="#CCCCCC" 
+                                                                           VerticalAlignment="Center" 
+                                                                           Margin="8,0,0,0"
+                                                                           TextTrimming="CharacterEllipsis"/>
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Background="#1A1A1A" 
+                                                               CornerRadius="6" 
+                                                               Padding="12,8"
+                                                               HorizontalAlignment="Stretch">
+                                                            <Grid ColumnDefinitions="Auto,*">
+                                                                <ic:FluentIcon Grid.Column="0" 
+                                                                             Icon="Clock" 
+                                                                             Width="16" Height="16" 
+                                                                             Foreground="#1DB954" 
+                                                                             VerticalAlignment="Center"/>
+                                                                <TextBlock Grid.Column="1" 
+                                                                           Text="{Binding UpdatedAtRelative}" 
+                                                                           FontSize="12" 
+                                                                           FontWeight="Medium" 
+                                                                           Foreground="#CCCCCC" 
+                                                                           VerticalAlignment="Center" 
+                                                                           Margin="8,0,0,0"/>
+                                                            </Grid>
+                                                        </Border>
+                                                    </StackPanel>
+
+                                                    <!-- Action button -->
+                                                    <Button Grid.Row="2" 
+                                                            Grid.ColumnSpan="2"
+                                                            Content="Open Project"
+                                                            Background="Transparent"
+                                                            Foreground="White"
+                                                            BorderThickness="1"
+                                                            BorderBrush="White"
+                                                            Padding="16,8"
+                                                            FontSize="13"
+                                                            FontWeight="Medium"
+                                                            CornerRadius="6"
+                                                            Margin="0,6,0,0"
+                                                            Click="OnProjectButtonClick"
+                                                            Tag="{Binding}"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

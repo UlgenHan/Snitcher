@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="avares://Snitcher.UI.Desktop/Themes/Brushes.axaml"/>
+				<StyleInclude Source="avares://Snitcher.UI.Desktop/Themes/Styles.axaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

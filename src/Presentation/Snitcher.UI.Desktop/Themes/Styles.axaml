@@ -1,0 +1,285 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<!-- Add Controls for Previewer Here -->
+		</Border>
+	</Design.PreviewWith>
+
+	<!-- Base Window Style -->
+	<Style Selector="Window">
+		<Setter Property="Background" Value="{StaticResource BackgroundBaseBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<!-- Spotify Button Styles -->
+	<Style Selector="Button">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="16,8"/>
+		<Setter Property="FontWeight" Value="700"/>
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="CornerRadius" Value="500"/>
+	</Style>
+
+	<Style Selector="Button:pointerover">
+		<Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+	</Style>
+
+	<Style Selector="Button:pressed">
+		<Setter Property="Background" Value="{StaticResource BackgroundPressBrush}"/>
+	</Style>
+
+	<!-- Spotify Primary Green Button -->
+	<Style Selector="Button.spotify-primary">
+		<Setter Property="Background" Value="{StaticResource SpotifyGreenBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+		<Setter Property="FontWeight" Value="700"/>
+		<Setter Property="FontSize" Value="14"/>
+	</Style>
+
+	<Style Selector="Button.spotify-primary:pointerover">
+		<Setter Property="Background" Value="{StaticResource SpotifyGreenHoverBrush}"/>
+	</Style>
+
+	<Style Selector="Button.spotify-primary:pressed">
+		<Setter Property="Background" Value="{StaticResource SpotifyGreenActiveBrush}"/>
+	</Style>
+
+	<!-- TextBlock Styles -->
+	<Style Selector="TextBlock.spotify-title">
+		<Setter Property="FontSize" Value="48"/>
+		<Setter Property="FontWeight" Value="900"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.spotify-heading-1">
+		<Setter Property="FontSize" Value="32"/>
+		<Setter Property="FontWeight" Value="900"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.spotify-heading-2">
+		<Setter Property="FontSize" Value="24"/>
+		<Setter Property="FontWeight" Value="900"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.spotify-heading-3">
+		<Setter Property="FontSize" Value="20"/>
+		<Setter Property="FontWeight" Value="700"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.spotify-body">
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="FontWeight" Value="400"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.spotify-caption">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="FontWeight" Value="400"/>
+		<Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+	</Style>
+
+	<!-- Add spotify-micro style -->
+	<Style Selector="TextBlock.spotify-micro">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="FontWeight" Value="400"/>
+		<Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+	</Style>
+
+	<!-- TextBox Styles -->
+	<Style Selector="TextBox">
+		<Setter Property="Background" Value="{StaticResource BackgroundHighlightBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="12,16"/>
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="FontWeight" Value="400"/>
+		<Setter Property="CornerRadius" Value="4"/>
+	</Style>
+
+	<Style Selector="TextBox:focus">
+		<Setter Property="BorderBrush" Value="{StaticResource SpotifyGreenBrush}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+	</Style>
+
+	<!-- Card Styles -->
+	<Style Selector="Border.spotify-card">
+		<Setter Property="Background" Value="{StaticResource BackgroundHighlightBrush}"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="CornerRadius" Value="8"/>
+		<Setter Property="Padding" Value="16"/>
+	</Style>
+
+	<Style Selector="Border.spotify-card:pointerover">
+		<Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+	</Style>
+
+	<!-- Sidebar Styles -->
+	<Style Selector="Border.spotify-sidebar">
+		<Setter Property="Background" Value="{StaticResource SpotifyBlackBrush}"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+	</Style>
+
+	<!-- Top Bar Styles -->
+	<Style Selector="Border.spotify-topbar">
+		<Setter Property="Background" Value="{StaticResource BackgroundHighlightBrush}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource BackgroundPressBrush}"/>
+		<Setter Property="BorderThickness" Value="0,0,0,1"/>
+	</Style>
+
+	<!-- Separator Styles -->
+	<Style Selector="Separator">
+		<Setter Property="Background" Value="{StaticResource BackgroundPressBrush}"/>
+		<Setter Property="Height" Value="1"/>
+	</Style>
+
+	<!-- Enhanced Navigation Styles -->
+	<Style Selector="Button.spotify-nav">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+		<Setter Property="FontWeight" Value="500"/>
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="Padding" Value="16,12"/>
+		<Setter Property="HorizontalAlignment" Value="Stretch"/>
+		<Setter Property="HorizontalContentAlignment" Value="Left"/>
+		<Setter Property="CornerRadius" Value="8"/>
+		<Setter Property="Margin" Value="0,2"/>
+	</Style>
+
+	<Style Selector="Button.spotify-nav:pointerover">
+		<Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="Button.spotify-nav.active">
+		<Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+		<Setter Property="FontWeight" Value="600"/>
+	</Style>
+
+	<!-- Secondary Button Style -->
+	<Style Selector="Button.spotify-secondary">
+		<Setter Property="Background" Value="{StaticResource BackgroundHighlightBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="FontWeight" Value="500"/>
+		<Setter Property="CornerRadius" Value="6"/>
+	</Style>
+
+	<Style Selector="Button.spotify-secondary:pointerover">
+		<Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+	</Style>
+
+	<!-- Workspace Card Styles -->
+	<Style Selector="Border.workspace-card">
+		<Setter Property="Background" Value="#181818"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="CornerRadius" Value="16"/>
+	</Style>
+
+	<Style Selector="Border.workspace-card:pointerover">
+		<Setter Property="Background" Value="#1E1E1E"/>
+		<Setter Property="RenderTransform">
+			<ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+		</Setter>
+	</Style>
+
+	<!-- Project Card Styles -->
+	<Style Selector="Border.project-card">
+		<Setter Property="Background" Value="#1A1A1A"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="CornerRadius" Value="12"/>
+	</Style>
+
+	<Style Selector="Border.project-card:pointerover">
+		<Setter Property="Background" Value="#222222"/>
+		<Setter Property="RenderTransform">
+			<ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+		</Setter>
+	</Style>
+
+	<!-- Card Typography -->
+	<Style Selector="TextBlock.workspace-title">
+		<Setter Property="FontSize" Value="18"/>
+		<Setter Property="FontWeight" Value="600"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.workspace-subtitle">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.workspace-stat">
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="FontWeight" Value="600"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.workspace-info">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.project-title">
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="FontWeight" Value="600"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.project-subtitle">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+	</Style>
+
+	<Style Selector="TextBlock.project-tag">
+		<Setter Property="FontSize" Value="10"/>
+		<Setter Property="FontWeight" Value="500"/>
+		<Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+	</Style>
+
+	<!-- Card Elements -->
+	<Style Selector="Button.card-menu">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="CornerRadius" Value="6"/>
+	</Style>
+
+	<Style Selector="Button.card-menu:pointerover">
+		<Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+	</Style>
+
+	<Style Selector="Button.add-member">
+		<Setter Property="Background" Value="{StaticResource SpotifyGreenBrush}"/>
+		<Setter Property="Foreground" Value="White"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="CornerRadius" Value="12"/>
+	</Style>
+
+	<Style Selector="Button.workspace-action">
+		<Setter Property="Background" Value="{StaticResource BackgroundHighlightBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="CornerRadius" Value="8"/>
+		<Setter Property="Padding" Value="12,6"/>
+	</Style>
+
+	<Style Selector="Button.workspace-action:pointerover">
+		<Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+	</Style>
+
+</Styles>

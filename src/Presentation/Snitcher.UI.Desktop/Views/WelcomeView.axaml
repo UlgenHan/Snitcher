@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="Snitcher.UI.Desktop.Views.WelcomeView">
+
+    <Grid Background="#121212">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="24">
+            <Border Background="#1DB954" CornerRadius="50" Width="80" Height="80" HorizontalAlignment="Center">
+                <TextBlock Text="S"
+                           FontSize="48"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+            </Border>
+            
+            <TextBlock Text="Welcome to Snitcher"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       HorizontalAlignment="Center"/>
+            
+            <TextBlock Text="Your API Development Platform"
+                       FontSize="16"
+                       Foreground="#B3B3B3"
+                       HorizontalAlignment="Center"/>
+            
+            <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+                <Button Content="🔧 Request Builder"
+                        Background="#1DB954"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Padding="16,8"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        CornerRadius="6"/>
+                
+                <Button Content="📁 Collections"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="1"
+                        BorderBrush="White"
+                        Padding="16,8"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        CornerRadius="6"/>
+                
+                <Button Content="🔍 Proxy Inspector"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="1"
+                        BorderBrush="White"
+                        Padding="16,8"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        CornerRadius="6"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
