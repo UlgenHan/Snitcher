@@ -12,6 +12,8 @@ using Snitcher.UI.Desktop.Models.WorkSpaces;
 using Snitcher.UI.Desktop.Services.Database;
 using Snitcher.UI.Desktop.Dialogs;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Snitcher.UI.Desktop.Views;
 
 namespace Snitcher.UI.Desktop.ViewModels
 {
@@ -57,6 +59,9 @@ namespace Snitcher.UI.Desktop.ViewModels
         private bool _isWorkspaceOpened = false;
 
         public bool IsNotWorkspaceOpenedAndNotSearching => !IsWorkspaceOpened && !ShowSearchResults;
+
+        [ObservableProperty]
+        public bool _isSearchResultCountZero = false;
 
         public SnitcherMainViewModel(IDatabaseIntegrationService databaseService, ILogger<SnitcherMainViewModel> logger)
         {
@@ -259,9 +264,18 @@ namespace Snitcher.UI.Desktop.ViewModels
                 StatusMessage = $"Opening project: {project.Name}";
                 
                 SelectedProject = project;
-                
-                // TODO: Open project in main application window
+
                 System.Diagnostics.Debug.WriteLine($"Opening project: {project.Name}");
+                // Open the main application window with full UI
+                var serviceProvider = App.ServiceProvider;
+                if (serviceProvider != null)
+                {
+                    var appWindow = new MainApplicationWindow
+                    {
+                        DataContext = serviceProvider.GetRequiredService<MainApplicationWindowViewModel>()
+                    };
+                    appWindow.Show();
+                }
                 
                 StatusMessage = $"Project {project.Name} opened";
             }
@@ -408,7 +422,7 @@ namespace Snitcher.UI.Desktop.ViewModels
                 var results = await _databaseService.SearchAsync(SearchTerm);
                 SearchResults = results;
                 ShowSearchResults = true;
-                
+                IsSearchResultCountZero = SearchResults == null || (SearchResults?.Workspaces.Count == 0 && SearchResults?.Projects.Count == 0);
                 StatusMessage = $"Found {results.Workspaces.Count} workspace(s) and {results.Projects.Count} project(s)";
             }
             catch (Exception ex)

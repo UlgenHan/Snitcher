@@ -186,8 +186,8 @@
                                                 Padding="16,8"
                                                 Cursor="Hand"
                                                 Margin="0,0,0,2"
-                                                Command="{Binding ElementName=MainWindow, Path=DataContext.OpenProjectCommand}"
-                                                CommandParameter="{Binding}">
+                                                Click="OnProjectButtonClick"
+												Tag="{Binding}">
                                             <Grid ColumnDefinitions="Auto,*">
                                                 <ic:FluentIcon Grid.Column="0" Icon="Code" Width="16" Height="16" VerticalAlignment="Center"/>
                                                 <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="14" Foreground="#B3B3B3" VerticalAlignment="Center" Margin="12,0,0,0"/>
@@ -308,7 +308,7 @@
                                 </StackPanel>
                                 
                                 <!-- No Results Message -->
-                                <StackPanel IsVisible="{Binding ShowSearchResults}">
+                                <StackPanel IsVisible="{Binding IsSearchResultCountZero}">
                                     <TextBlock Text="No results found" FontSize="14" Foreground="#B3B3B3" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </StackPanel>

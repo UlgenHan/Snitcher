@@ -110,18 +110,7 @@ public partial class SnitcherMainWindow : Window
         {
             var viewModel = DataContext as SnitcherMainViewModel;
             viewModel?.OpenProject(project);
-            
-            // Open the main application window with full UI
-            var serviceProvider = App.ServiceProvider;
-            if (serviceProvider != null)
-            {
-                var appWindow = new MainApplicationWindow
-                {
-                    DataContext = serviceProvider.GetRequiredService<MainApplicationWindowViewModel>()
-                };
-                appWindow.Show();
-            }
-            
+              
             // Hide main window instead of closing it
             this.Hide();
         }

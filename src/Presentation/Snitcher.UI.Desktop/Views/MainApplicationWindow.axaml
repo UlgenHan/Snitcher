@@ -285,36 +285,6 @@
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
-
-                    <!-- User Profile -->
-                    <Border Grid.Row="1"
-                           Background="#181818"
-                           Height="80"
-                           Padding="24">
-                        <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Center">
-                            <Border Grid.Column="0"
-                                   Background="#282828"
-                                   CornerRadius="16"
-                                   Width="32" Height="32"
-                                   Margin="0,0,16,0">
-                                <TextBlock Text="👤"
-                                           FontSize="16"
-                                           Foreground="#B3B3B3"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-                            </Border>
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                <TextBlock Text="Developer"
-                                           FontSize="14"
-                                           FontWeight="700"
-                                           Foreground="#FFFFFF"/>
-                                <TextBlock Text="Pro Account"
-                                           FontSize="11"
-                                           Foreground="#1DB954"
-                                           Margin="0,2,0,0"/>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
                 </Grid>
             </Border>
 
