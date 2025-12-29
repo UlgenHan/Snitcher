@@ -208,35 +208,6 @@ namespace Snitcher.UI.Desktop.ViewModels
         }
 
         [RelayCommand]
-        private async Task CreateNamespace(Workspace? workspace)
-        {
-            try
-            {
-                var targetWorkspace = workspace ?? SelectedWorkspace;
-                if (targetWorkspace == null)
-                {
-                    StatusMessage = "Please select a workspace first";
-                    return;
-                }
-
-                var dialog = new CreateNamespaceDialog();
-                var result = await dialog.ShowDialog<Namespace?>(GetParentWindow());
-                
-                if (result != null)
-                {
-                    // Refresh the workspace to show new namespace
-                    await RefreshWorkspaceAsync(targetWorkspace);
-                    StatusMessage = "Namespace created successfully";
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to create namespace");
-                StatusMessage = $"Error creating namespace: {ex.Message}";
-            }
-        }
-
-        [RelayCommand]
         public async Task OpenWorkspace(Workspace? workspace)
         {
             System.Diagnostics.Debug.WriteLine($"OpenWorkspace command called with workspace: {workspace?.Name ?? "null"}");
