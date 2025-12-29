@@ -67,35 +67,6 @@
                 </ComboBox>
             </StackPanel>
 
-            <!-- Namespace Selection -->
-            <StackPanel Spacing="8">
-                <TextBlock Text="Namespace"
-                         FontSize="14"
-                         FontWeight="Medium"
-                         Foreground="White"/>
-                <ComboBox ItemsSource="{Binding AvailableNamespaces}"
-                         SelectedItem="{Binding SelectedNamespace}"
-                         FontSize="14"
-                         Padding="12,8"
-                         Background="#282828"
-                         Foreground="White"
-                         BorderBrush="#404040"
-                         BorderThickness="1">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate DataType="models:Namespace" x:DataType="models:Namespace">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <TextBlock Text="📊"
-                                             FontSize="16"
-                                             VerticalAlignment="Center"
-                                             Foreground="#FF6B35"/>
-                                <TextBlock Text="{Binding FullName}"
-                                         VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
-
             <!-- Name Input -->
             <StackPanel Spacing="8">
                 <TextBlock Text="Project Name"
