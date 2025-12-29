@@ -113,7 +113,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Title and Status -->
@@ -479,6 +479,7 @@
                                     <!-- Request Headers -->
                                     <Expander Header="Headers" 
                                              IsExpanded="True"
+											 HorizontalAlignment="Stretch"
                                              HorizontalContentAlignment="Stretch"
                                              Margin="0,0,0,12">
                                         <ListBox ItemsSource="{Binding SelectedFlow.RequestHeaders}"
@@ -512,8 +513,9 @@
 
                                     <!-- Request Body -->
                                     <Expander Header="Body" 
-                                             IsExpanded="{Binding SelectedFlow.RequestBody, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                             HorizontalContentAlignment="Stretch">
+											 HorizontalAlignment="Stretch"
+                                             HorizontalContentAlignment="Stretch"
+                                             IsExpanded="{Binding SelectedFlow.RequestBody, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                                         <ScrollViewer HorizontalScrollBarVisibility="Auto"
                                                      VerticalScrollBarVisibility="Auto"
                                                      MaxHeight="200"
@@ -575,6 +577,7 @@
                                     <!-- Response Headers -->
                                     <Expander Header="Headers" 
                                              IsExpanded="True"
+                                             HorizontalAlignment="Stretch"
                                              HorizontalContentAlignment="Stretch"
                                              Margin="0,0,0,12">
                                         <ListBox ItemsSource="{Binding SelectedFlow.ResponseHeaders}"
@@ -609,6 +612,7 @@
                                     <!-- Response Body -->
                                     <Expander Header="Body" 
                                              IsExpanded="{Binding SelectedFlow.ResponseBody, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+											 HorizontalAlignment="Stretch"
                                              HorizontalContentAlignment="Stretch">
                                         <ScrollViewer HorizontalScrollBarVisibility="Auto"
                                                      VerticalScrollBarVisibility="Auto"
@@ -626,21 +630,6 @@
                                     </Expander>
                                 </StackPanel>
                             </Border>
-                        </StackPanel>
-
-                        <!-- Empty State -->
-                        <StackPanel HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   IsVisible="{Binding SelectedFlow, Converter={x:Static ObjectConverters.IsNull}}">
-                            <TextBlock Text="📭" 
-                                     FontSize="48"
-                                     HorizontalAlignment="Center"
-                                     Foreground="#7C7C7C"/>
-                            <TextBlock Text="Select a request to view details" 
-                                     FontSize="14"
-                                     Foreground="#7C7C7C"
-                                     HorizontalAlignment="Center"
-                                     Margin="0,16,0,0"/>
                         </StackPanel>
                     </Grid>
                 </Grid>

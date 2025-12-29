@@ -23,6 +23,10 @@ namespace Snitcher.UI.Desktop.ViewModels
         [ObservableProperty]
         private string _currentViewDescription = "Get started with your API development journey";
 
+        [ObservableProperty]
+        private bool _isSidebarExpanded = false;
+
+
         public MainApplicationWindowViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
@@ -106,6 +110,12 @@ namespace Snitcher.UI.Desktop.ViewModels
         {
             // Trigger the command to notify the view
             WindowCloseCommand.NotifyCanExecuteChanged();
+        }
+
+        [RelayCommand]
+        private void ToggleSidebar()
+        {
+            IsSidebarExpanded = !IsSidebarExpanded;
         }
     }
 }

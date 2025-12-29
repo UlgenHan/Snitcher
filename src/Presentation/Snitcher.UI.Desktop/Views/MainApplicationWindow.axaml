@@ -12,7 +12,9 @@
         xmlns:collectionsViews="using:Snitcher.UI.Desktop.Domains.Collections"
         xmlns:workspaceVm="using:Snitcher.UI.Desktop.Domains.Workspace"
         xmlns:workspaceViews="using:Snitcher.UI.Desktop.Domains.Workspace"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:ic="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+        xmlns:converter="using:Snitcher.UI.Desktop.Converters"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="1000"
         x:Class="Snitcher.UI.Desktop.Views.MainApplicationWindow"
@@ -101,7 +103,15 @@
         <Style Selector="Button.primaryButton:pointerover">
             <Setter Property="Background" Value="#1ED760"/>
         </Style>
-    </Window.Styles>
+
+	</Window.Styles>
+
+	<Window.Resources>
+		<converter:SidebarWidthConverter x:Key = "SidebarWidthConverter" />
+		<converter:SidebarAlignmentConverter x:Key = "SidebarAlignmentConverter" />
+		<converter:IconAlignmentConverter x:Key = "IconAlignmentConverter" />
+		<converter:SidebarPaddingConverter x:Key = "SidebarPaddingConverter" />
+	</Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -183,13 +193,14 @@
         <!-- Main Content -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="1"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Sidebar -->
-            <Border Grid.Column="0" Background="#000000">
+            <Border Grid.Column="0" Background="#000000"
+					Width="{Binding IsSidebarExpanded, Converter={StaticResource SidebarWidthConverter}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -201,91 +212,152 @@
                                  HorizontalScrollBarVisibility="Disabled"
                                  VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,24,0,0">
-                            <!-- Main Section -->
-                            <StackPanel Margin="24,0,24,24">
-                                <TextBlock Text="MAIN"
-                                           FontSize="12"
-                                           FontWeight="700"
-                                           Foreground="#B3B3B3"
-                                           Margin="0,0,0,8"/>
-                                
-                                <Button Classes="sidebarButton"
-                                       Command="{Binding NavigateToWelcomeCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="16">
-                                        <TextBlock Text="🏠" FontSize="20"/>
-                                        <TextBlock Text="Welcome"/>
-                                    </StackPanel>
-                                </Button>
-                                
-                                <Button Classes="sidebarButton"
-                                       Command="{Binding NavigateToRequestBuilderCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="16">
-                                        <TextBlock Text="🔧" FontSize="20"/>
-                                        <TextBlock Text="Request Builder"/>
-                                    </StackPanel>
-                                </Button>
-                                
-                                <Button Classes="sidebarButton"
-                                       Command="{Binding NavigateToCollectionsCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="16">
-                                        <TextBlock Text="📁" FontSize="20"/>
-                                        <TextBlock Text="Collections"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-
-                            <!-- Tools Section -->
-                            <StackPanel Margin="24,0,24,24">
-                                <TextBlock Text="TOOLS"
-                                           FontSize="12"
-                                           FontWeight="700"
-                                           Foreground="#B3B3B3"
-                                           Margin="0,0,0,8"/>
-                                
-                                <Button Classes="sidebarButton"
-                                       Command="{Binding NavigateToProxyInspectorCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="16">
-                                        <TextBlock Text="🔍" FontSize="20"/>
-                                        <TextBlock Text="Proxy Inspector"/>
-                                    </StackPanel>
-                                </Button>
-                                
-                                <Button Classes="sidebarButton"
-                                       Command="{Binding NavigateToAutomationCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="16">
-                                        <TextBlock Text="▶️" FontSize="20"/>
-                                        <TextBlock Text="Automation"/>
-                                    </StackPanel>
-                                </Button>
-                                
-                                <Button Classes="sidebarButton"
-                                       Command="{Binding NavigateToExtensionsCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="16">
-                                        <TextBlock Text="🧩" FontSize="20"/>
-                                        <TextBlock Text="Extensions"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-
-                            <!-- Settings Section -->
-                            <StackPanel Margin="24,0,24,24">
-                                <TextBlock Text="SETTINGS"
-                                           FontSize="12"
-                                           FontWeight="700"
-                                           Foreground="#B3B3B3"
-                                           Margin="0,0,0,8"/>
-                                
-                                <Button Classes="sidebarButton"
-                                       Command="{Binding NavigateToWorkspaceManagerCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="16">
-                                        <TextBlock Text="⚙️" FontSize="20"/>
-                                        <TextBlock Text="Workspace Manager"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
+                            <!-- Toggle Button -->
+                            <Button Classes="sidebarButton"
+                                    Command="{Binding ToggleSidebarCommand}"
+                                    HorizontalContentAlignment="{Binding IsSidebarExpanded,Converter={StaticResource SidebarAlignmentConverter}}"
+                                    ToolTip.Tip="Toggle Sidebar"
+                                    Padding="{Binding IsSidebarExpanded, Converter={StaticResource SidebarPaddingConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ic:FluentIcon Icon="Navigation"
+                                                  Width="16" Height="16"
+                                                  Foreground="#CCCCCC"
+                                                  VerticalAlignment="Center"/>
+                                    <TextBlock Text="Menu" 
+                                               IsVisible="{Binding IsSidebarExpanded}" 
+                                               Foreground="#CCCCCC"
+                                               VerticalAlignment="Center"
+                                               Margin="16,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Classes="sidebarButton"
+                                    Command="{Binding NavigateToWelcomeCommand}"
+                                    HorizontalContentAlignment="{Binding IsSidebarExpanded,Converter={StaticResource SidebarAlignmentConverter}}"
+                                    Padding="{Binding IsSidebarExpanded, Converter={StaticResource SidebarPaddingConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ic:FluentIcon Icon="Home"
+                                                  Width="16" Height="16"
+                                                  Foreground="#CCCCCC"
+                                                  VerticalAlignment="Center"/>
+                                    <TextBlock Text="Welcome" 
+                                               IsVisible="{Binding IsSidebarExpanded}" 
+                                               Foreground="#CCCCCC"
+                                               VerticalAlignment="Center"
+                                               Margin="16,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Classes="sidebarButton"
+                                    Command="{Binding NavigateToRequestBuilderCommand}"
+                                    HorizontalContentAlignment="{Binding IsSidebarExpanded,Converter={StaticResource SidebarAlignmentConverter}}"
+                                    Padding="{Binding IsSidebarExpanded, Converter={StaticResource SidebarPaddingConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ic:FluentIcon Icon="Code"
+                                                  Width="16" Height="16"
+                                                  Foreground="#CCCCCC"
+                                                  VerticalAlignment="Center"/>
+                                    <TextBlock Text="Request Builder" 
+                                               IsVisible="{Binding IsSidebarExpanded}" 
+                                               Foreground="#CCCCCC"
+                                               VerticalAlignment="Center"
+                                               Margin="16,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Classes="sidebarButton"
+                                    Command="{Binding NavigateToCollectionsCommand}"
+                                    HorizontalContentAlignment="{Binding IsSidebarExpanded,Converter={StaticResource SidebarAlignmentConverter}}"
+                                    Padding="{Binding IsSidebarExpanded, Converter={StaticResource SidebarPaddingConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ic:FluentIcon Icon="Folder"
+                                                  Width="16" Height="16"
+                                                  Foreground="#CCCCCC"
+                                                  VerticalAlignment="Center"/>
+                                    <TextBlock Text="Collections" 
+                                               IsVisible="{Binding IsSidebarExpanded}" 
+                                               Foreground="#CCCCCC"
+                                               VerticalAlignment="Center"
+                                               Margin="16,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Classes="sidebarButton"
+                                    Command="{Binding NavigateToProxyInspectorCommand}"
+                                    HorizontalContentAlignment="{Binding IsSidebarExpanded,Converter={StaticResource SidebarAlignmentConverter}}"
+                                    Padding="{Binding IsSidebarExpanded, Converter={StaticResource SidebarPaddingConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ic:FluentIcon Icon="Search"
+                                                  Width="16" Height="16"
+                                                  Foreground="#CCCCCC"
+                                                  VerticalAlignment="Center"/>
+                                    <TextBlock Text="Proxy Inspector" 
+                                               IsVisible="{Binding IsSidebarExpanded}" 
+                                               Foreground="#CCCCCC"
+                                               VerticalAlignment="Center"
+                                               Margin="16,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Classes="sidebarButton"
+                                    Command="{Binding NavigateToAutomationCommand}"
+                                    HorizontalContentAlignment="{Binding IsSidebarExpanded,Converter={StaticResource SidebarAlignmentConverter}}"
+                                    Padding="{Binding IsSidebarExpanded, Converter={StaticResource SidebarPaddingConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ic:FluentIcon Icon="Play"
+                                                  Width="16" Height="16"
+                                                  Foreground="#CCCCCC"
+                                                  VerticalAlignment="Center"/>
+                                    <TextBlock Text="Automation" 
+                                               IsVisible="{Binding IsSidebarExpanded}" 
+                                               Foreground="#CCCCCC"
+                                               VerticalAlignment="Center"
+                                               Margin="16,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Classes="sidebarButton"
+                                    Command="{Binding NavigateToExtensionsCommand}"
+                                    HorizontalContentAlignment="{Binding IsSidebarExpanded,Converter={StaticResource SidebarAlignmentConverter}}"
+                                    Padding="{Binding IsSidebarExpanded, Converter={StaticResource SidebarPaddingConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ic:FluentIcon Icon="Apps"
+                                                  Width="16" Height="16"
+                                                  Foreground="#CCCCCC"
+                                                  VerticalAlignment="Center"/>
+                                    <TextBlock Text="Extensions" 
+                                               IsVisible="{Binding IsSidebarExpanded}" 
+                                               Foreground="#CCCCCC"
+                                               VerticalAlignment="Center"
+                                               Margin="16,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Classes="sidebarButton"
+                                    Command="{Binding NavigateToWorkspaceManagerCommand}"
+                                    HorizontalContentAlignment="{Binding IsSidebarExpanded,Converter={StaticResource SidebarAlignmentConverter}}"
+                                    Padding="{Binding IsSidebarExpanded, Converter={StaticResource SidebarPaddingConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ic:FluentIcon Icon="Settings"
+                                                  Width="16" Height="16"
+                                                  Foreground="#CCCCCC"
+                                                  VerticalAlignment="Center"/>
+                                    <TextBlock Text="Workspace Manager" 
+                                               IsVisible="{Binding IsSidebarExpanded}" 
+                                               Foreground="#CCCCCC"
+                                               VerticalAlignment="Center"
+                                               Margin="16,0,0,0"/>
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
+				<Border.Transitions>
+					<Transitions>
+						<DoubleTransition Property="Width"
+										  Duration="0:0:0.2"/>
+					</Transitions>
+				</Border.Transitions>
             </Border>
 
             <!-- Separator -->
