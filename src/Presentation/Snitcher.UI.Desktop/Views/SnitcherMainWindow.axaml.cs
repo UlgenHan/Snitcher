@@ -100,7 +100,7 @@ public partial class SnitcherMainWindow : Window
             }
             
             // Hide main window instead of closing it
-            this.Hide();
+            this.Close();
         }
     }
 
@@ -112,7 +112,9 @@ public partial class SnitcherMainWindow : Window
             viewModel?.OpenProject(project);
               
             // Hide main window instead of closing it
-            this.Hide();
+            // this.Hide();
+            // For now we will close it
+            this.Close();
         }
     }
 
