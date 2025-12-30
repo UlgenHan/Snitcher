@@ -8,6 +8,156 @@
         x:Class="Snitcher.UI.Desktop.Domains.RequestBuilder.RequestBuilderView"
         x:DataType="vm:RequestBuilderViewModel">
 
+    <UserControl.Styles>
+        <!-- HTTP Method Badge Styles -->
+        <Style Selector="ComboBox.httpMethod">
+            <Setter Property="Background" Value="{StaticResource BackgroundHighlightBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="600"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="MinWidth" Value="80"/>
+        </Style>
+        
+        <Style Selector="ComboBox.httpMethod:focus">
+            <Setter Property="BorderBrush" Value="{StaticResource SpotifyGreenBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        
+        <!-- Send Button Styles -->
+        <Style Selector="Button.sendButton">
+            <Setter Property="Background" Value="{StaticResource SpotifyGreenBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="600"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="MinWidth" Value="80"/>
+        </Style>
+        
+        <Style Selector="Button.sendButton:pointerover">
+            <Setter Property="Background" Value="{StaticResource SpotifyGreenHoverBrush}"/>
+        </Style>
+        
+        <Style Selector="Button.sendButton:pressed">
+            <Setter Property="Background" Value="{StaticResource SpotifyGreenActiveBrush}"/>
+        </Style>
+        
+        <!-- URL TextBox Styles -->
+        <Style Selector="TextBox.urlInput">
+            <Setter Property="Background" Value="{StaticResource BackgroundHighlightBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,12"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="400"/>
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        
+        <Style Selector="TextBox.urlInput:focus">
+            <Setter Property="BorderBrush" Value="{StaticResource SpotifyGreenBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        
+        <!-- Tab Control Styles -->
+        <Style Selector="TabControl.requestTabs">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        
+        <Style Selector="TabControl.requestTabs TabItem">
+            <Setter Property="Background" Value="{StaticResource BackgroundElevatedBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="500"/>
+            <Setter Property="CornerRadius" Value="4,4,0,0"/>
+            <Setter Property="Margin" Value="2,0,2,0"/>
+        </Style>
+        
+        <Style Selector="TabControl.requestTabs TabItem:selected">
+            <Setter Property="Background" Value="{StaticResource BackgroundHighlightBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        
+        <Style Selector="TabControl.requestTabs TabItem:pointerover:selected">
+            <Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+        </Style>
+        
+        <!-- Parameter/Header Item Styles -->
+        <Style Selector="Border.paramItem">
+            <Setter Property="Background" Value="{StaticResource BackgroundElevatedBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Margin" Value="0,2"/>
+        </Style>
+        
+        <Style Selector="Border.paramItem:pointerover">
+            <Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+        </Style>
+        
+        <!-- Action Button Styles -->
+        <Style Selector="Button.actionBtn">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="500"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        
+        <Style Selector="Button.actionBtn:pointerover">
+            <Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+        </Style>
+        
+        <!-- Copy Button Styles -->
+        <Style Selector="Button.copyBtn">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSubduedBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="500"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+        
+        <Style Selector="Button.copyBtn:pointerover">
+            <Setter Property="Background" Value="{StaticResource BackgroundHoverBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBaseBrush}"/>
+        </Style>
+        
+        <!-- Response Status Code Styles -->
+        <Style Selector="TextBlock.statusCode.success">
+            <Setter Property="Foreground" Value="{StaticResource SuccessBrush}"/>
+            <Setter Property="FontWeight" Value="600"/>
+        </Style>
+        
+        <Style Selector="TextBlock.statusCode.error">
+            <Setter Property="Foreground" Value="{StaticResource ErrorBrush}"/>
+            <Setter Property="FontWeight" Value="600"/>
+        </Style>
+        
+        <Style Selector="TextBlock.statusCode.warning">
+            <Setter Property="Foreground" Value="{StaticResource WarningBrush}"/>
+            <Setter Property="FontWeight" Value="600"/>
+        </Style>
+        
+        <Style Selector="TextBlock.statusCode.info">
+            <Setter Property="Foreground" Value="{StaticResource InfoBrush}"/>
+            <Setter Property="FontWeight" Value="600"/>
+        </Style>
+    </UserControl.Styles>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,310 +167,543 @@
 
         <!-- Request Header -->
         <Border Grid.Row="0"
-                Background="#2D3748"
-                Padding="12"
-                CornerRadius="8"
-                Margin="12">
+                Background="{StaticResource BackgroundHighlightBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="20"
+                CornerRadius="0">
             <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto">
                 <ComboBox Grid.Column="0"
-                          Width="120"
+                          Classes="httpMethod"
                           SelectedItem="{Binding CurrentRequest.Method}"
                           ItemsSource="{x:Static vm:RequestBuilderViewModel.HttpMethods}"/>
 
                 <TextBox Grid.Column="1"
-                         Margin="8,0"
+                         Classes="urlInput"
                          Text="{Binding CurrentRequest.Url}"
-                         Watermark="Enter request URL..."/>
+                         Watermark="Enter request URL (e.g., https://api.example.com/users)"
+                         Margin="12,0,0,0"/>
 
                 <Button Grid.Column="2"
-                        Margin="0,0,8,0"
+                        Classes="sendButton"
                         Content="Send"
                         Command="{Binding SendRequestCommand}"
-                        IsEnabled="{Binding !IsLoading}"/>
+                        IsEnabled="{Binding !IsLoading}"
+                        Margin="12,0,0,0"/>
 
-                <ProgressBar Grid.Column="3"
-                             Width="16"
-                             Height="16"
-                             IsIndeterminate="True"
-                             IsVisible="{Binding IsLoading}"/>
+                <Grid Grid.Column="3" Width="24" Height="24" Margin="8,0,0,0">
+                    <ProgressBar IsIndeterminate="True"
+                                 IsVisible="{Binding IsLoading}"
+                                 Foreground="{StaticResource SpotifyGreenBrush}"/>
+                </Grid>
             </Grid>
         </Border>
 
         <!-- Main Content -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,*" Margin="12,0,12,12">
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" Margin="0">
             <!-- Request Panel -->
-            <Border Grid.Column="0" Background="#1A202C" Padding="12" CornerRadius="8" Margin="0,0,6,0">
-                <TabControl SelectedIndex="{Binding SelectedTabIndex}">
-                    <TabItem Header="Params">
-                        <Grid RowDefinitions="Auto,*">
-                            <Button Grid.Row="0" 
-                                    Content="Add Parameter" 
-                                    Command="{Binding AddParameterCommand}"
-                                    Margin="0,0,0,8"/>
-                            <ListBox Grid.Row="1" ItemsSource="{Binding CurrentRequest.Parameters}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="models:HttpParameter">
-                                        <Grid ColumnDefinitions="*,*,Auto,Auto" Margin="0,2">
-                                            <CheckBox Grid.Column="0" 
-                                                      IsChecked="{Binding Enabled}" 
-                                                      VerticalAlignment="Center"/>
-                                            <TextBox Grid.Column="1" 
-                                                     Text="{Binding Key}" 
-                                                     Watermark="Key"
-                                                     Margin="4,0"/>
-                                            <TextBox Grid.Column="2" 
-                                                     Text="{Binding Value}" 
-                                                     Watermark="Value"
-                                                     Margin="4,0"/>
-                                            <Button Grid.Column="3" 
-                                                    Content="×" 
-                                                    Click="RemoveParameter_Click"
-                                                    Tag="{Binding}"
-                                                    Width="24" Height="24"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Grid>
-                    </TabItem>
+            <Border Grid.Column="0" 
+                    Background="{StaticResource BackgroundElevatedBrush}" 
+                    BorderBrush="{StaticResource BorderBrush}" 
+                    BorderThickness="0,0,1,0" 
+                    Padding="0" 
+                    CornerRadius="0">
+                <Grid RowDefinitions="Auto,*">
+                    <!-- Request Panel Header -->
+                    <Border Grid.Row="0" 
+                            Background="{StaticResource BackgroundHighlightBrush}" 
+                            Padding="20,16" 
+                            CornerRadius="0">
+                        <TextBlock Text="Request" 
+                                   Classes="spotify-heading-3"
+                                   Foreground="{StaticResource TextBaseBrush}"/>
+                    </Border>
+                    
+                    <!-- Request Tabs -->
+                    <TabControl Grid.Row="1" 
+                                Classes="requestTabs" 
+                                SelectedIndex="{Binding SelectedTabIndex}">
+                        <TabItem Header="Params">
+                            <Grid RowDefinitions="Auto,*" Margin="20">
+                                <Button Grid.Row="0" 
+                                        Classes="actionBtn"
+                                        Content="+ Add Parameter" 
+                                        Command="{Binding AddParameterCommand}"
+                                        Margin="0,0,0,12"/>
+                                <ScrollViewer Grid.Row="1">
+                                    <ItemsControl ItemsSource="{Binding CurrentRequest.Parameters}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="models:HttpParameter">
+                                                <Border Classes="paramItem">
+                                                    <Grid ColumnDefinitions="Auto,*,*,Auto">
+                                                        <CheckBox Grid.Column="0" 
+                                                                  IsChecked="{Binding Enabled}" 
+                                                                  VerticalAlignment="Center"
+                                                                  Foreground="{StaticResource TextBaseBrush}"
+                                                                  Margin="0,0,8,0"/>
+                                                        <TextBox Grid.Column="1" 
+                                                                 Text="{Binding Key}" 
+                                                                 Watermark="Key"
+                                                                 FontSize="13"
+                                                                 Padding="8,6"
+                                                                 Margin="0,0,8,0"/>
+                                                        <TextBox Grid.Column="2" 
+                                                                 Text="{Binding Value}" 
+                                                                 Watermark="Value"
+                                                                 FontSize="13"
+                                                                 Padding="8,6"
+                                                                 Margin="0,0,8,0"/>
+                                                        <Button Grid.Column="3" 
+                                                                Classes="copyBtn"
+                                                                Content="×" 
+                                                                Click="RemoveParameter_Click"
+                                                                Tag="{Binding}"
+                                                                Width="24" 
+                                                                Height="24"
+                                                                FontSize="14"/>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+                        </TabItem>
 
-                    <TabItem Header="Headers">
-                        <Grid RowDefinitions="Auto,*">
-                            <Button Grid.Row="0" 
-                                    Content="Add Header" 
-                                    Command="{Binding AddHeaderCommand}"
-                                    Margin="0,0,0,8"/>
-                            <ListBox Grid.Row="1" ItemsSource="{Binding CurrentRequest.Headers}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="models:HttpHeader">
-                                        <Grid ColumnDefinitions="*,*,Auto,Auto" Margin="0,2">
-                                            <CheckBox Grid.Column="0" 
-                                                      IsChecked="{Binding Enabled}" 
-                                                      VerticalAlignment="Center"/>
-                                            <TextBox Grid.Column="1" 
-                                                     Text="{Binding Key}" 
-                                                     Watermark="Header"
-                                                     Margin="4,0"/>
-                                            <TextBox Grid.Column="2" 
-                                                     Text="{Binding Value}" 
-                                                     Watermark="Value"
-                                                     Margin="4,0"/>
-                                            <Button Grid.Column="3" 
-                                                    Content="×" 
-                                                    Click="RemoveHeader_Click"
-                                                    Tag="{Binding}"
-                                                    Width="24" Height="24"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Grid>
-                    </TabItem>
+                        <TabItem Header="Headers">
+                            <Grid RowDefinitions="Auto,*" Margin="20">
+                                <Button Grid.Row="0" 
+                                        Classes="actionBtn"
+                                        Content="+ Add Header" 
+                                        Command="{Binding AddHeaderCommand}"
+                                        Margin="0,0,0,12"/>
+                                <ScrollViewer Grid.Row="1">
+                                    <ItemsControl ItemsSource="{Binding CurrentRequest.Headers}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="models:HttpHeader">
+                                                <Border Classes="paramItem">
+                                                    <Grid ColumnDefinitions="Auto,*,*,Auto">
+                                                        <CheckBox Grid.Column="0" 
+                                                                  IsChecked="{Binding Enabled}" 
+                                                                  VerticalAlignment="Center"
+                                                                  Foreground="{StaticResource TextBaseBrush}"
+                                                                  Margin="0,0,8,0"/>
+                                                        <TextBox Grid.Column="1" 
+                                                                 Text="{Binding Key}" 
+                                                                 Watermark="Header"
+                                                                 FontSize="13"
+                                                                 Padding="8,6"
+                                                                 Margin="0,0,8,0"/>
+                                                        <TextBox Grid.Column="2" 
+                                                                 Text="{Binding Value}" 
+                                                                 Watermark="Value"
+                                                                 FontSize="13"
+                                                                 Padding="8,6"
+                                                                 Margin="0,0,8,0"/>
+                                                        <Button Grid.Column="3" 
+                                                                Classes="copyBtn"
+                                                                Content="×" 
+                                                                Click="RemoveHeader_Click"
+                                                                Tag="{Binding}"
+                                                                Width="24" 
+                                                                Height="24"
+                                                                FontSize="14"/>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+                        </TabItem>
 
-                    <TabItem Header="Body">
-                        <Grid RowDefinitions="Auto,*" Margin="8">
-                            <ComboBox Grid.Row="0"
-                                      SelectedItem="{Binding SelectedBodyType}"
-                                      Margin="0,0,0,8">
-                                <x:String>None</x:String>
-                                <x:String>Form</x:String>
-                                <x:String>XForm</x:String>
-                                <x:String>Raw</x:String>
-                                <x:String>Binary</x:String>
-                                <x:String>GraphQL</x:String>
-                            </ComboBox>
-                            
-                            <TextBox Grid.Row="1" 
-                                     Text="{Binding CurrentRequest.Body}"
-                                     TextWrapping="Wrap"
-                                     AcceptsReturn="True"
-                                     VerticalAlignment="Stretch"
-                                     FontFamily="Consolas"
-                                     FontSize="12"
-                                     Watermark="Enter request body..."/>
-                        </Grid>
-                    </TabItem>
+                        <TabItem Header="Body">
+                            <Grid RowDefinitions="Auto,*" Margin="20">
+                                <ComboBox Grid.Row="0"
+                                          Background="{StaticResource BackgroundHighlightBrush}"
+                                          Foreground="{StaticResource TextBaseBrush}"
+                                          BorderThickness="0"
+                                          Padding="12,8"
+                                          CornerRadius="4"
+                                          FontSize="13"
+                                          SelectedItem="{Binding SelectedBodyType}"
+                                          Margin="0,0,0,12">
+                                    <x:String>None</x:String>
+                                    <x:String>Form</x:String>
+                                    <x:String>XForm</x:String>
+                                    <x:String>Raw</x:String>
+                                    <x:String>Binary</x:String>
+                                    <x:String>GraphQL</x:String>
+                                </ComboBox>
+                                
+                                <TextBox Grid.Row="1" 
+                                         Background="{StaticResource BackgroundHighlightBrush}"
+                                         Foreground="{StaticResource TextBaseBrush}"
+                                         BorderBrush="{StaticResource BorderBrush}"
+                                         BorderThickness="1"
+                                         Text="{Binding CurrentRequest.Body}"
+                                         TextWrapping="Wrap"
+                                         AcceptsReturn="True"
+                                         VerticalAlignment="Stretch"
+                                         FontFamily="Consolas"
+                                         FontSize="12"
+                                         Padding="12"
+                                         CornerRadius="4"
+                                         MinHeight="200"
+                                         Watermark="Enter request body (JSON, XML, text...)"/>
+                            </Grid>
+                        </TabItem>
 
-                    <TabItem Header="Auth">
-                        <Grid RowDefinitions="Auto,*" Margin="8">
-                            <ComboBox Grid.Row="0"
-                                      SelectedItem="{Binding SelectedAuthenticationType}"
-                                      Margin="0,0,0,8">
-                                <x:String>None</x:String>
-                                <x:String>Basic</x:String>
-                                <x:String>Bearer</x:String>
-                                <x:String>ApiKey</x:String>
-                                <x:String>OAuth2</x:String>
-                            </ComboBox>
-                            
-                            <ScrollViewer Grid.Row="1">
-                                <StackPanel Spacing="8">
-                                    <!-- Basic Auth -->
-                                    <StackPanel Spacing="8">
-                                        <TextBox Text="{Binding CurrentRequest.Authentication.Username}" 
-                                                 Watermark="Username"/>
-                                        <TextBox Text="{Binding CurrentRequest.Authentication.Password}" 
-                                                 Watermark="Password"
-                                                 PasswordChar="*"/>
-                                    </StackPanel>
-                                    
-                                    <!-- Bearer Token -->
-                                    <StackPanel>
-                                        <TextBox Text="{Binding CurrentRequest.Authentication.BearerToken}" 
-                                                 Watermark="Bearer Token"
-                                                 AcceptsReturn="True"
-                                                 TextWrapping="Wrap"/>
-                                    </StackPanel>
-                                    
-                                    <!-- API Key -->
-                                    <StackPanel Spacing="8">
-                                        <TextBox Text="{Binding CurrentRequest.Authentication.ApiKey}" 
-                                                 Watermark="API Key"/>
-                                        <TextBox Text="{Binding CurrentRequest.Authentication.ApiValue}" 
-                                                 Watermark="API Value"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </ScrollViewer>
-                        </Grid>
-                    </TabItem>
-
-                    <TabItem Header="Tests">
-                        <Grid RowDefinitions="Auto,*">
-                            <Button Grid.Row="0" 
-                                    Content="Add Test" 
-                                    Command="{Binding AddTestCommand}"
-                                    Margin="0,0,0,8"/>
-                            <ListBox Grid.Row="1" ItemsSource="{Binding CurrentRequest.Tests}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="models:HttpTest">
-                                        <Grid ColumnDefinitions="*,Auto" Margin="0,2">
-                                            <TextBox Grid.Column="0" 
-                                                     Text="{Binding Script}" 
+                        <TabItem Header="Auth">
+                            <Grid RowDefinitions="Auto,*" Margin="20">
+                                <ComboBox Grid.Row="0"
+                                          Background="{StaticResource BackgroundHighlightBrush}"
+                                          Foreground="{StaticResource TextBaseBrush}"
+                                          BorderThickness="0"
+                                          Padding="12,8"
+                                          CornerRadius="4"
+                                          FontSize="13"
+                                          SelectedItem="{Binding SelectedAuthenticationType}"
+                                          Margin="0,0,0,12">
+                                    <x:String>None</x:String>
+                                    <x:String>Basic</x:String>
+                                    <x:String>Bearer</x:String>
+                                    <x:String>ApiKey</x:String>
+                                    <x:String>OAuth2</x:String>
+                                </ComboBox>
+                                
+                                <ScrollViewer Grid.Row="1">
+                                    <StackPanel Spacing="12">
+                                        <!-- Basic Auth -->
+                                        <StackPanel Spacing="8" IsVisible="{Binding SelectedAuthenticationType, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                            <TextBlock Text="Basic Authentication" 
+                                                       Classes="spotify-body"
+                                                       Foreground="{StaticResource TextBaseBrush}"/>
+                                            <TextBox Text="{Binding CurrentRequest.Authentication.Username}" 
+                                                     Watermark="Username"
+                                                     FontSize="13"
+                                                     Padding="8,6"/>
+                                            <TextBox Text="{Binding CurrentRequest.Authentication.Password}" 
+                                                     Watermark="Password"
+                                                     PasswordChar="*"
+                                                     FontSize="13"
+                                                     Padding="8,6"/>
+                                        </StackPanel>
+                                        
+                                        <!-- Bearer Token -->
+                                        <StackPanel Spacing="8">
+                                            <TextBlock Text="Bearer Token" 
+                                                       Classes="spotify-body"
+                                                       Foreground="{StaticResource TextBaseBrush}"/>
+                                            <TextBox Text="{Binding CurrentRequest.Authentication.BearerToken}" 
+                                                     Watermark="Enter Bearer token"
                                                      AcceptsReturn="True"
                                                      TextWrapping="Wrap"
-                                                     MinHeight="60"
-                                                     FontFamily="Consolas"
-                                                     FontSize="12"/>
-                                            <Button Grid.Column="1" 
-                                                    Content="×" 
-                                                    Click="RemoveTest_Click"
-                                                    Tag="{Binding}"
-                                                    Width="24" Height="24"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
+                                                     FontSize="13"
+                                                     Padding="8,6"
+                                                     MinHeight="60"/>
+                                        </StackPanel>
+                                        
+                                        <!-- API Key -->
+                                        <StackPanel Spacing="8">
+                                            <TextBlock Text="API Key" 
+                                                       Classes="spotify-body"
+                                                       Foreground="{StaticResource TextBaseBrush}"/>
+                                            <TextBox Text="{Binding CurrentRequest.Authentication.ApiKey}" 
+                                                     Watermark="API Key"
+                                                     FontSize="13"
+                                                     Padding="8,6"/>
+                                            <TextBox Text="{Binding CurrentRequest.Authentication.ApiValue}" 
+                                                     Watermark="API Value"
+                                                     FontSize="13"
+                                                     Padding="8,6"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Tests">
+                            <Grid RowDefinitions="Auto,*" Margin="20">
+                                <Button Grid.Row="0" 
+                                        Classes="actionBtn"
+                                        Content="+ Add Test" 
+                                        Command="{Binding AddTestCommand}"
+                                        Margin="0,0,0,12"/>
+                                <ScrollViewer Grid.Row="1">
+                                    <ItemsControl ItemsSource="{Binding CurrentRequest.Tests}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="models:HttpTest">
+                                                <Border Classes="paramItem">
+                                                    <Grid ColumnDefinitions="*,Auto">
+                                                        <TextBox Grid.Column="0" 
+                                                                 Text="{Binding Script}" 
+                                                                 AcceptsReturn="True"
+                                                                 TextWrapping="Wrap"
+                                                                 MinHeight="80"
+                                                                 FontFamily="Consolas"
+                                                                 FontSize="12"
+                                                                 Padding="8,6"
+                                                                 Background="{StaticResource BackgroundHighlightBrush}"
+                                                                 Foreground="{StaticResource TextBaseBrush}"
+                                                                 BorderBrush="{StaticResource BorderBrush}"
+                                                                 BorderThickness="1"
+                                                                 CornerRadius="4"
+                                                                 Margin="0,0,8,0"/>
+                                                        <Button Grid.Column="1" 
+                                                                Classes="copyBtn"
+                                                                Content="×" 
+                                                                Click="RemoveTest_Click"
+                                                                Tag="{Binding}"
+                                                                Width="24" 
+                                                                Height="24"
+                                                                FontSize="14"
+                                                                VerticalAlignment="Top"/>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
             </Border>
 
             <!-- Response Panel -->
-            <Border Grid.Column="1" Background="#1A202C" Padding="12" CornerRadius="8" Margin="6,0,0,0">
+            <Border Grid.Column="1" 
+                    Background="{StaticResource BackgroundElevatedBrush}" 
+                    Padding="0" 
+                    CornerRadius="0">
                 <Grid RowDefinitions="Auto,*,Auto">
-                    <!-- Response Header -->
-                    <Grid Grid.Row="0" RowDefinitions="Auto,Auto,Auto" Margin="0,0,0,12">
-                        <TextBlock Grid.Row="0" 
-                                   Text="Response" 
-                                   FontSize="16" 
-                                   FontWeight="Bold" 
-                                   Foreground="White"/>
-                        
-                        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,4">
+                    <!-- Response Panel Header -->
+                    <Border Grid.Row="0" 
+                            Background="{StaticResource BackgroundHighlightBrush}" 
+                            Padding="20,16" 
+                            CornerRadius="0">
+                        <Grid ColumnDefinitions="*,Auto">
                             <TextBlock Grid.Column="0" 
-                                       Text="{Binding CurrentResponse.StatusCode}" 
-                                       FontSize="14" 
-                                       FontWeight="Bold"
-                                       Foreground="Lime"/>
-                            <TextBlock Grid.Column="1" 
-                                       Text="{Binding CurrentResponse.StatusText}" 
-                                       FontSize="12" 
-                                       Foreground="#B3B3B3"
-                                       Margin="8,0"/>
-                            <TextBlock Grid.Column="2" 
-                                       Text="{Binding CurrentResponse.GetResponseTimeDisplay}" 
-                                       FontSize="12" 
-                                       Foreground="#888888"/>
+                                       Text="Response" 
+                                       Classes="spotify-heading-3"
+                                       Foreground="{StaticResource TextBaseBrush}"/>
+                            <Button Grid.Column="1" 
+                                    Classes="copyBtn"
+                                    Content="📋 Copy" 
+                                    Command="{Binding SendRequestCommand}"
+                                    IsEnabled="{Binding CurrentResponse, Converter={x:Static ObjectConverters.IsNotNull}}"/>
                         </Grid>
-                        
-                        <TextBlock Grid.Row="2" 
-                                   Text="{Binding StatusMessage}" 
-                                   FontSize="12" 
-                                   Foreground="#888888"/>
-                    </Grid>
+                    </Border>
+                    
+                    <!-- Response Status -->
+                    <Border Grid.Row="1" 
+                            Background="{StaticResource BackgroundElevatedBrush}" 
+                            Padding="20" 
+                            BorderBrush="{StaticResource BorderBrush}" 
+                            BorderThickness="0,0,0,1">
+                        <Grid RowDefinitions="Auto,Auto,Auto">
+                            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+                                <TextBlock Grid.Column="0" 
+                                           Text="{Binding CurrentResponse.StatusCode}" 
+                                           FontSize="16" 
+                                           FontWeight="700"
+                                           Margin="0,0,12,0"/>
+                                <TextBlock Grid.Column="1" 
+                                           Text="{Binding CurrentResponse.StatusText}" 
+                                           FontSize="14" 
+                                           FontWeight="500"
+                                           Foreground="{StaticResource TextBaseBrush}"
+                                           Margin="0,0,12,0"/>
+                                <TextBlock Grid.Column="2" 
+                                           Text="{Binding CurrentResponse.GetResponseTimeDisplay}" 
+                                           FontSize="12" 
+                                           Foreground="{StaticResource TextSubduedBrush}"/>
+                            </Grid>
+                            
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding StatusMessage}" 
+                                       FontSize="12" 
+                                       Foreground="{StaticResource TextSubduedBrush}"
+                                       Margin="0,8,0,0"/>
+                                       
+                            <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto,Auto">
+                                <TextBlock Grid.Column="0" 
+                                           Text="Size: {Binding CurrentResponse.GetSizeDisplay}" 
+                                           FontSize="11" 
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Margin="0,0,16,0"/>
+                                <TextBlock Grid.Column="1" 
+                                           Text="Time: {Binding CurrentResponse.Timestamp:HH:mm:ss}" 
+                                           FontSize="11" 
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Margin="0,0,16,0"/>
+                                <TextBlock Grid.Column="2" 
+                                           Text="Type: {Binding CurrentResponse.ContentType}" 
+                                           FontSize="11" 
+                                           Foreground="{StaticResource TextMutedBrush}"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
 
                     <!-- Response Body -->
-                    <TabControl Grid.Row="1">
+                    <TabControl Grid.Row="2" 
+                                Classes="requestTabs" 
+                                Margin="0">
                         <TabItem Header="Body">
-                            <ScrollViewer>
-                                <TextBlock Text="{Binding CurrentResponse.Body}" 
-                                           FontFamily="Consolas"
-                                           FontSize="12"
-                                           Foreground="White"
-                                           TextWrapping="Wrap"/>
-                            </ScrollViewer>
+                            <Grid RowDefinitions="Auto,*">
+                                <Border Grid.Row="0" 
+                                        Background="{StaticResource BackgroundHighlightBrush}" 
+                                        Padding="12,8" 
+                                        BorderBrush="{StaticResource BorderBrush}" 
+                                        BorderThickness="0,0,0,1">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Grid.Column="0" 
+                                                   Text="Response Body" 
+                                                   FontSize="12" 
+                                                   FontWeight="600"
+                                                   Foreground="{StaticResource TextBaseBrush}"/>
+                                        <Button Grid.Column="1" 
+                                                Classes="copyBtn"
+                                                Content="📋 Copy Body" 
+                                                Command="{Binding SendRequestCommand}"
+                                                IsEnabled="{Binding CurrentResponse, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                                    </Grid>
+                                </Border>
+                                <ScrollViewer Grid.Row="1" 
+                                              Background="{StaticResource BackgroundElevatedBrush}" 
+                                              Padding="20">
+                                    <TextBlock Text="{Binding CurrentResponse.Body}" 
+                                               FontFamily="Consolas"
+                                               FontSize="12"
+                                               Foreground="{StaticResource TextBaseBrush}"
+                                               TextWrapping="Wrap"
+                                               xml:space="preserve"/>
+                                </ScrollViewer>
+                            </Grid>
                         </TabItem>
                         
                         <TabItem Header="Headers">
-                            <ListBox ItemsSource="{Binding CurrentResponse.Headers}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="models:HttpHeader">
-                                        <Grid ColumnDefinitions="*,*" Margin="0,2">
-                                            <TextBlock Grid.Column="0" 
-                                                       Text="{Binding Key}" 
-                                                       FontWeight="Bold"
-                                                       Foreground="White"/>
-                                            <TextBlock Grid.Column="1" 
-                                                       Text="{Binding Value}" 
-                                                       Foreground="#B3B3B3"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                            <Grid RowDefinitions="Auto,*">
+                                <Border Grid.Row="0" 
+                                        Background="{StaticResource BackgroundHighlightBrush}" 
+                                        Padding="12,8" 
+                                        BorderBrush="{StaticResource BorderBrush}" 
+                                        BorderThickness="0,0,0,1">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Grid.Column="0" 
+                                                   Text="Response Headers" 
+                                                   FontSize="12" 
+                                                   FontWeight="600"
+                                                   Foreground="{StaticResource TextBaseBrush}"/>
+                                        <Button Grid.Column="1" 
+                                                Classes="copyBtn"
+                                                Content="📋 Copy Headers" 
+                                                Command="{Binding SendRequestCommand}"
+                                                IsEnabled="{Binding CurrentResponse, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                                    </Grid>
+                                </Border>
+                                <ScrollViewer Grid.Row="1" 
+                                              Background="{StaticResource BackgroundElevatedBrush}" 
+                                              Padding="20">
+                                    <ItemsControl ItemsSource="{Binding CurrentResponse.Headers}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="models:HttpHeader">
+                                                <Border Classes="paramItem" 
+                                                        Margin="0,2">
+                                                    <Grid ColumnDefinitions="*,*">
+                                                        <TextBlock Grid.Column="0" 
+                                                                   Text="{Binding Key}" 
+                                                                   FontWeight="600"
+                                                                   FontSize="12"
+                                                                   Foreground="{StaticResource TextBaseBrush}"
+                                                                   Margin="0,0,16,0"/>
+                                                        <TextBlock Grid.Column="1" 
+                                                                   Text="{Binding Value}" 
+                                                                   FontSize="12"
+                                                                   Foreground="{StaticResource TextSubduedBrush}"
+                                                                   TextWrapping="Wrap"/>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
                         </TabItem>
                         
                         <TabItem Header="Preview">
-                            <TextBlock Text="HTML/XML Preview would go here" 
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                            <Grid RowDefinitions="Auto,*">
+                                <Border Grid.Row="0" 
+                                        Background="{StaticResource BackgroundHighlightBrush}" 
+                                        Padding="12,8" 
+                                        BorderBrush="{StaticResource BorderBrush}" 
+                                        BorderThickness="0,0,0,1">
+                                    <TextBlock Text="Preview" 
+                                               FontSize="12" 
+                                               FontWeight="600"
+                                               Foreground="{StaticResource TextBaseBrush}"/>
+                                </Border>
+                                <Border Grid.Row="1" 
+                                        Background="{StaticResource BackgroundElevatedBrush}" 
+                                        Padding="20">
+                                    <StackPanel HorizontalAlignment="Center" 
+                                                VerticalAlignment="Center" 
+                                                Spacing="12">
+                                        <TextBlock Text="🚧 Preview Coming Soon" 
+                                                   FontSize="16" 
+                                                   FontWeight="600"
+                                                   Foreground="{StaticResource TextSubduedBrush}"/>
+                                        <TextBlock Text="HTML/XML preview will be available in future updates" 
+                                                   FontSize="12" 
+                                                   Foreground="{StaticResource TextMutedBrush}" 
+                                                   TextWrapping="Wrap"
+                                                   TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
                         </TabItem>
                     </TabControl>
-
-                    <!-- Response Footer -->
-                    <TextBlock Grid.Row="2" 
-                               Text="{Binding CurrentResponse.GetSizeDisplay}" 
-                               FontSize="12" 
-                               Foreground="#888888"
-                               Margin="0,8,0,0"/>
                 </Grid>
             </Border>
         </Grid>
 
         <!-- Status Bar -->
         <Border Grid.Row="2"
-                Background="#2D3748"
-                Padding="12,8"
-                CornerRadius="8"
-                Margin="12">
-            <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                Background="{StaticResource BackgroundHighlightBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="20,12"
+                CornerRadius="0">
+            <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto">
                 <TextBlock Grid.Column="0" 
                            Text="{Binding StatusMessage}" 
-                           Foreground="White"/>
+                           Classes="spotify-caption"
+                           Foreground="{StaticResource TextSubduedBrush}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,12,0"/>
                 
                 <Button Grid.Column="1" 
-                        Content="Save" 
+                        Classes="actionBtn"
+                        Content="💾 Save" 
                         Command="{Binding SaveRequestCommand}"
-                        Margin="0,0,8,0"/>
+                        Margin="0,0,12,0"/>
                 
                 <Button Grid.Column="2" 
-                        Content="New" 
+                        Classes="actionBtn"
+                        Content="📄 New" 
                         Command="{Binding NewRequestCommand}"
-                        Margin="0,0,8,0"/>
+                        Margin="0,0,12,0"/>
                 
                 <Button Grid.Column="3" 
-                        Content="Duplicate" 
-                        Command="{Binding DuplicateRequestCommand}"/>
+                        Classes="actionBtn"
+                        Content="📋 Duplicate" 
+                        Command="{Binding DuplicateRequestCommand}"
+                        Margin="0,0,12,0"/>
+                        
+                <Button Grid.Column="4" 
+                        Classes="actionBtn"
+                        Content="🗑️ Clear History" 
+                        Command="{Binding ClearHistoryCommand}"/>
             </Grid>
         </Border>
     </Grid>
